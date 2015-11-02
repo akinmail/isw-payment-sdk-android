@@ -39,12 +39,13 @@ Ask the user for input
 In the onClick method of the button that asks the user to pay, add this code
 
 ```java
-//Pay with Card
+	//Setup client id and secret
     RequestOptions options = RequestOptions.builder()
 	.setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E")
 	.setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=").build(); 
 ```
 ```java
+	//Setup request options
 	final PurchaseRequest request = new PurchaseRequest();
     //Optional email, mobile no, BVN etc to uniquely identify the customer
 	request.setCustomerId(“1234567890"); 
@@ -103,22 +104,21 @@ To load Verve wallet, add this code
 ```
 After populating the spinner, when the user clicks an item and then clicks pay, use this code
 ```java
+	//Setup request options
     //Pay with Wallet Item
-    final PurchaseRequest request = new PurchaseRequest();	
-```
-```java
+    final PurchaseRequest request = new PurchaseRequest();
     //Optional email, mobile no, BVN etc to uniquely identify the customer
 	request.setCustomerId(“1234567890"); //Amount in Naira
     request.setAmount("100"); 
     if (paymethodSpinner.getSelectedItem() == null) {
 		return;
     }
-```
-```java
     request.setPan(((PaymentMethod) paymethodSpinner.getSelectedItem()).getToken());
     request.setPinData(pin.getText().toString());
     request.setCurrency("NGN");
     request.setTransactionRef(RandomString.numeric(12));
+```
+```java
 	//Send payment
     new WalletSDK(context, options).purchase(request, new IswCallback<PurchaseResponse>() {
     @Override
