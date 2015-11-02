@@ -141,5 +141,15 @@ After populating the spinner, when the user clicks an item and then clicks pay, 
 ##Testing status of payment
 
 ```java
-	PaymentStatusResponse response = new WalletClient(options).getPaymentStatus("117499114589", "100");
+	new WalletClient(context, options).getPaymentStatus("117499114589", "100", new IswCallback<PaymentStatusResponse>() {
+    @Override
+    public void onError(Exception error) {
+        // Handle and notify user of error
+    }
+
+    @Override
+    public void onSuccess(PaymentStatusResponse response) {
+        //print response message
+    }
+    });
 ```
