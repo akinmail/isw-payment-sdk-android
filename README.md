@@ -100,7 +100,7 @@ To load Verve wallet, add this code
 	});
 ​
 ```
-After populating the spinner, when the user clicks an item and the clicks pay, use this code
+After populating the spinner, when the user clicks an item and then clicks pay, use this code
 ```java
     //Pay with Wallet Item
     final PurchaseRequest request = new PurchaseRequest();	
