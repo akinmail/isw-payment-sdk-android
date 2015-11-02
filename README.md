@@ -137,3 +137,9 @@ After populating the spinner, when the user clicks an item and then clicks pay, 
     }
 	
 ```
+
+##Testing status of payment
+
+```java
+	PaymentStatusResponse response = new WalletClient(options).getPaymentStatus("117499114589", "100");
+```
