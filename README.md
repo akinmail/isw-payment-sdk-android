@@ -45,15 +45,15 @@ In the onClick method of the button that asks the user to pay, add this code
 	.setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=").build(); 
 ```
 ```java
-	//Setup request options
+	//Setup request parameters
 	final PurchaseRequest request = new PurchaseRequest();
     //Optional email, mobile no, BVN etc to uniquely identify the customer
 	request.setCustomerId(“1234567890"); 
     request.setAmount(“100"); //Amount in Naira
+	request.setCurrency("NGN");
     request.setPan(“5060100000000000012"); //Card No
     request.setPinData("1111"); //Card PIN
     request.setExpiryDate("2004"); // expiry date in YYMM format
-    request.setCurrency("NGN");
     request.setTransactionRef(RandomString.numeric(12)); //unique transaction reference
     Context context = this; // reference to your Android Activity
 ```
@@ -104,18 +104,18 @@ To load Verve wallet, add this code
 ```
 After populating the spinner, when the user clicks an item and then clicks pay, use this code
 ```java
-	//Setup request options using wallet item
+	//Setup request parameters using wallet item
     final PurchaseRequest request = new PurchaseRequest();
     //Optional email, mobile no, BVN etc to uniquely identify the customer
 	request.setCustomerId(“1234567890");
 	//Amount in Naira
     request.setAmount("100"); 
+	request.setCurrency("NGN");
     if (paymethodSpinner.getSelectedItem() == null) {
 		return;
     }
     request.setPan(((PaymentMethod) paymethodSpinner.getSelectedItem()).getToken());
     request.setPinData(pin.getText().toString());
-    request.setCurrency("NGN");
     request.setTransactionRef(RandomString.numeric(12));
 ```
 ```java
