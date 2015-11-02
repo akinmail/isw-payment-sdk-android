@@ -142,7 +142,8 @@ After populating the spinner, when the user clicks an item and then clicks pay, 
 
 To check the status of a payment made, use the code below
 ```java
-	new WalletClient(context, options).getPaymentStatus("117499114589", "100", new IswCallback<PaymentStatusResponse>() {
+	//pass the transaction ref and the amount as the parameters to getPaymentStatus()
+	new WalletSDK(context, options).getPaymentStatus("117499114589", "100", new IswCallback<PaymentStatusResponse>() {
     @Override
     public void onError(Exception error) {
         // Handle and notify user of error
