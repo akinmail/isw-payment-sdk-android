@@ -1,5 +1,3 @@
-# isw-payment-sdk-android
-
 ## Payment SDK for Android
 
 Interswitch payment SDK allows you to accept payments from customers within your mobile application.
