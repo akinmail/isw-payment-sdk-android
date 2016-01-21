@@ -4,19 +4,20 @@ Interswitch payment SDK allows you to accept payments from customers within your
 The first step to ​using the ​Android SDK is to register as a merchant. This is described [here] (http://merchantxuat.interswitchng.com/paymentgateway/getting-started/overview/sign-up-as-a-merchant)
 
 
-### Download the SDK
+### Download the latest SDK
 
 
-Download the SDK from the link below
+Download the latest SDK from the link below
 
 https://github.com/techquest/isw-payment-sdk-android/releases
 
-It consists of ​4 libraries:
+It consists of ​5 libraries:
 
 1. *core.jar*
 2. *payment.jar*
 3. *payment-android-release.aar*
 4. *gson-2.​3.1.jar*
+5. *deviceprint-release-2.2.0.aar*
 
 **Use Android Studio’s dependency management tool (Gradle) to add the libraries to your project.**
 
@@ -25,17 +26,18 @@ It consists of ​4 libraries:
 
 1. Download **Android Studio 1.2.2** or later
 2. Create a new project
-3. Add **core.jar, payment.jar, payment-android-release.aar** and **gson-2.​3.1.jar** to your project by putting them in the libs folder of the app.
+3. Add **core.jar, payment.jar, payment-android-release.aar**, **deviceprint-release-2.2.0.aar** and **gson-2.​3.1.jar** to your project by putting them in the libs folder of the app.
 4. To add the **payment-android-release.aar** library, navigate to **File -> New -> New Module -> Import .JAR/.AAR Package** option in Android Studio.
 5. Select the **payment-android-release.aar**
-6. Finally, rebuild the project 
+6. Repeat step 4 to step 5 to add **deviceprint-release-2.2.0.aar** to your project. Then select **deviceprint-release-2.2.0.aar** where apllicable.
+7. Finally, rebuild the project
 
 ### Accepting Payments with Card 
 
-Ask the user for input
+Ask the user for card details
 
 In the onClick method of the button that asks the user to pay, add this code
-
+Please note, supply your client id and client secret you got after registering as a merchant
 ```java
 	//Setup client id and secret
     RequestOptions options = RequestOptions.builder()
@@ -79,8 +81,15 @@ In the onClick method of the button that asks the user to pay, add this code
 
 ## Accepting Payment with Wallet
 
+First set your client id and client secret
+```java
+	//Setup client id and secret
+    RequestOptions options = RequestOptions.builder()
+	.setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E")
+	.setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=").build();
+```
 
-To load Verve wallet, add this code
+To load Verve wallet, add this code, use the resulting payment methods array to populate a spinner
 ```java
     //Load Wallet
     final WalletRequest request = new WalletRequest();
@@ -100,7 +109,7 @@ To load Verve wallet, add this code
 	});
 ​
 ```
-After populating the spinner, when the user clicks an item and then clicks pay, use this code
+After populating the spinner, when the user selects an item and then clicks pay, use this code
 ```java
 	//Setup request parameters using wallet item
     final PurchaseRequest request = new PurchaseRequest();
