@@ -41,7 +41,7 @@ The procedure to use the SDK on sandbox mode is just as easy,
 * Override the api base as follows 
 ```java
     Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
-    Payment.overrideApiBase("https://sandbox.interswitchng .com"); 
+    Payment.overrideApiBase("https://sandbox.interswitchng.com"); 
 ```
 * Follow the remaining steps in the documentation 
 
