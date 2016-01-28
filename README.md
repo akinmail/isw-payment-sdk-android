@@ -39,10 +39,10 @@ The procedure to use the SDK on sandbox mode is just as easy,
 
 1. Use sandbox client id and secret got from the developer console after signup(usually you have to wait for 5 minutes for you to see the sandbox details) 2. Override the api base as follows             
 2. Override the api base as follows 
-```java
-    Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
-    Payment.overrideApiBase("https://sandbox.interswitchng .com"); 
-```
+    ```java
+        Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
+        Payment.overrideApiBase("https://sandbox.interswitchng .com"); 
+    ```
 3. Follow the remaining steps in the documentation 
 
 
