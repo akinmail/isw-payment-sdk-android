@@ -37,7 +37,7 @@ It consists of ​5 libraries:
 
 The procedure to use the SDK on sandbox mode is just as easy, 
 
-* Use sandbox client id and secret got from the developer console after signup(usually you have to wait for 5 minutes for you to see the sandbox details) 2. Override the api base as follows             
+* Use sandbox client id and secret got from the developer console after signup(usually you have to wait for 5 minutes for you to see the sandbox details)              
 * Override the api base as follows 
 ```java
     Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
