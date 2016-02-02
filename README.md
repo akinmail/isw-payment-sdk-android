@@ -47,7 +47,7 @@ The procedure to use the SDK on sandbox mode is just as easy,
 
 
 
-### Accepting Payments with Card 
+### Accepting Payments with Card / Token
 
 Ask the user for card details
 
@@ -66,9 +66,9 @@ Please note, supply your client id and client secret you got after registering a
 	request.setCustomerId(“1234567890"); 
     request.setAmount(“100"); //Amount in Naira
 	request.setCurrency("NGN");
-    request.setPan(“5060100000000000012"); //Card No
-    request.setPinData("1111"); //Card PIN
-    request.setExpiryDate("2004"); // expiry date in YYMM format
+    request.setPan(“5060100000000000012"); //Card No or Token
+    request.setPinData("1111"); //Optional Card PIN for card payment
+    request.setExpiryDate("2004"); // Card or Token expiry date in YYMM format
     request.setTransactionRef(RandomString.numeric(12)); //unique transaction reference
     Context context = this; // reference to your Android Activity
 ```
@@ -81,13 +81,14 @@ Please note, supply your client id and client secret you got after registering a
     }
     @Override
     public void onSuccess(PurchaseResponse response) {
+        //Check if OTP is required
         if (StringUtils.hasText(response.getOtpTransactionIdentifier())) {
            //OTP required
            //Ask user for OTP and authorize transaction using the otpTransactionIdentifier
         } 
 		else { 
          //OTP not required
-         //Handle and notify user of successful transaction
+         //Handle and notify user of successful transaction. A token for the card details is returned in the response
         }
     }
     });
@@ -165,7 +166,7 @@ After populating the spinner, when the user selects an item and then clicks pay,
 To check the status of a payment made, use the code below
 
 ```java
-	//pass the transaction ref and the amount as the parameters to getPaymentStatus()
+	//pass the transactionRef and the amount as the parameters to getPaymentStatus()
 	new WalletSDK(context, options).getPaymentStatus("117499114589", "100", new IswCallback<PaymentStatusResponse>() {
     @Override
     public void onError(Exception error) {
