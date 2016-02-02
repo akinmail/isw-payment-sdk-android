@@ -32,6 +32,21 @@ It consists of ​5 libraries:
 6. Repeat step 4 to step 5 to add **deviceprint-release-2.2.0.aar** to your project. Then select **deviceprint-release-2.2.0.aar** where apllicable.
 7. Finally, rebuild the project
 
+
+### USING THE SDK IN SANDBOX MODE 
+
+The procedure to use the SDK on sandbox mode is just as easy, 
+
+* Use sandbox client id and secret got from the developer console after signup(usually you have to wait for 5 minutes for you to see the sandbox details)              
+* Override the api base as follows 
+```java
+    Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
+    Payment.overrideApiBase("https://sandbox.interswitchng.com"); 
+```
+* Follow the remaining steps in the documentation 
+
+
+
 ### Accepting Payments with Card 
 
 Ask the user for card details
@@ -142,7 +157,7 @@ After populating the spinner, when the user selects an item and then clicks pay,
            //Handle and notify user of successful transaction
         }
     }
-	
+	);
 ```
 
 ##Checking status of payment
