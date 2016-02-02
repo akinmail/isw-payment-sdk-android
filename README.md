@@ -81,13 +81,14 @@ Please note, supply your client id and client secret you got after registering a
     }
     @Override
     public void onSuccess(PurchaseResponse response) {
+        //Check if OTP is required
         if (StringUtils.hasText(response.getOtpTransactionIdentifier())) {
            //OTP required
            //Ask user for OTP and authorize transaction using the otpTransactionIdentifier
         } 
 		else { 
          //OTP not required
-         //Handle and notify user of successful transaction
+         //Handle and notify user of successful transaction. A token for the card details is returned in the response
         }
     }
     });
