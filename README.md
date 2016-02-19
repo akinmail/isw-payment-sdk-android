@@ -33,9 +33,9 @@ It consists of ​5 libraries:
 4. To add the **payment-android-release.aar** library, navigate to **File -> New -> New Module -> Import .JAR/.AAR Package** option in Android Studio.
 5. Select the **payment-android-release.aar**
 6. Repeat step 4 to step 5 to add **deviceprint-release-2.2.0.aar** to your project. Then select **deviceprint-release-2.2.0.aar** where applicable.
-7. To add the jar files, edit the build.gradle file of your app and add
-8. If you do not already have it, add the *appcompat* folder to your android sdk folder inside extras\android\support\v7
-9. If you do not already have it, add the *design* folder to your android sdk folder inside android\support
+7. If you do not already have it, add the *appcompat* folder to your android sdk folder inside extras\android\support\v7
+8. If you do not already have it, add the *design* folder to your android sdk folder inside android\support
+9. To add the jar files, edit the build.gradle file of your app and add
 
 ```java
     compile files('libs/core.jar')
@@ -45,7 +45,7 @@ It consists of ​5 libraries:
     compile 'com.android.support:design:23.1.1'
 ```
 
-8 Finally, rebuild the project
+10 Finally, rebuild the project
 
 
 ### USING THE SDK IN SANDBOX MODE 
