@@ -19,6 +19,7 @@ It consists of ​5 libraries:
 4. *gson-2.​3.1.jar*
 5. *deviceprint-release-2.2.0.aar*
 
+
 **Use Android Studio’s dependency management tool (Gradle) to add the libraries to your project.**
 
 
@@ -36,9 +37,11 @@ It consists of ​5 libraries:
     compile files('libs/core.jar')
     compile files('libs/gson-2.3.1.jar')
     compile files('libs/payment.jar')
+    compile 'com.android.support:appcompat-v7:23.1.1'
+    compile 'com.android.support:design:23.1.1'
 ```
 
-8. Finally, rebuild the project
+8 Finally, rebuild the project
 
 
 ### USING THE SDK IN SANDBOX MODE 
