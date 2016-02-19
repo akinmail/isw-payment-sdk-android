@@ -183,6 +183,8 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```
 
 
+## Using the SDK without UI
+
 ### Accepting Payments with Card / Token
 
 Ask the user for card details
