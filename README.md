@@ -55,81 +55,84 @@ During development of your app, you should use the SDK in sandbox mode to enable
 
 
 
-## In App Payment SDK for Android
+## Using the SDK with UI (IN PCI-DSS SCOPE : NO )
 
 ### Pay
 
-* This option consists of both Pay with card and Pay with Wallet
-* Create a pay button
-* In the onClick listener of the paybutton, add this code.
+* This option consists of both Pay with Card and Pay with Wallet
+* Create a Pay button
+* In the onClick listener of the Paybutton, add this code.
+
   Please note, supply your client id and client secret you got after registering as a merchant
+  
 ```java
     RequestOptions options = RequestOptions.builder().setClientId("IKIA335B188FDC3527EDB1E9300D35F6C51826DFC8A5").setClientSecret("4HOFYiMJitFQeHYUCH/pvTF6jpiIaZqzVKB/pheK4Cs=").build();
-                    Pay pay = new Pay(activity, customerId, paymentDescription, amount, currency, options, new IswCallback<PurchaseResponse>()  {
-                        @Override
-                        public void onError(Exception error) {
-                            //Handle error
-                        }
+    Pay pay = new Pay(activity, customerId, paymentDescription, amount, currency, options, new IswCallback<PurchaseResponse>()  {
+        @Override
+        public void onError(Exception error) {
+            //Handle error
+        }
     
-                        @Override
-                        public void onSuccess(PurchaseResponse response) {
-                            /*Handle success, user successfully paid, returns a purchase response object that contains several fields about the successful payment just made. 
-    The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
+        @Override
+        public void onSuccess(PurchaseResponse response) {
+        /*Handle success, user successfully paid, The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
      */                     
-                        }
-                    });
-                    pay.start();
-
+       }
+    });
+    pay.start();
 ```
 
 
-### Pay with card
+### Pay with card (UI)
     
-* Create a pay button
-* In the onClick listener of the paybutton, add this code.
+* Create a Pay button
+* In the onClick listener of the Paybutton, add this code.
+
   Please note, supply your client id and client secret you got after registering as a merchant
+  
 ```java
     RequestOptions options = RequestOptions.builder().setClientId("IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276").setClientSecret("Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=").build();
     PayWithCard payWithCard = new PayWithCard(activity, customerId, paymentDescription, amount, currency, options, new IswCallback<PurchaseResponse>() {
     
-                        @Override
-                        public void onError(Exception error) {
-                            //Handle error, user was unable to make successful payment
+        @Override
+        public void onError(Exception error) {
+            //Handle error, user was unable to make successful payment
     
-                        }
+        }
     
-                        @Override
-                        public void onSuccess(final PurchaseResponse response) {
-    				/*Handle success, user successfully paid, returns a purchase response object that contains several fields about the successful payment just made. 
-    The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
-     */                        
-                        }
-                    });
-                    payWithCard.start();
-
+        @Override
+        public void onSuccess(final PurchaseResponse response) {
+            /*Handle success, user successfully paid, The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
+        */                        
+        }
+    });
+    payWithCard.start();
 ```
 
 
-### Pay With Wallet
+### Pay With Wallet (UI)
 
-* Create a pay button
-* In the onClick listener of the paybutton, add this code.
+* Create a Pay button
+* In the onClick listener of the Paybutton, add this code.
+
   Please note, supply your client id and client secret you got after registering as a merchant
+  
 ```java
+    RequestOptions options = RequestOptions.builder().setClientId("IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276").setClientSecret("Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=").build();
     PayWithWallet payWithWallet = new PayWithWallet(activity, customerId, paymentDescription, amount, currency, options, new IswCallback<PurchaseResponse>() {
-                        @Override
-                        public void onError(Exception error) {
-                            //Handle error, user was unable to make successful payment
-                        }
+        @Override
+        public void onError(Exception error) {
+            //Handle error, user was unable to make successful payment
+        }
     
-                        @Override
-                        public void onSuccess(PurchaseResponse response) {
-                            /*Handle success, user successfully paid, returns a purchase response object that contains several fields about the successful payment just made. 
-                                The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
-                                 */              
-                        }
-                    });
-                    payWithWallet.start();
+        @Override
+        public void onSuccess(PurchaseResponse response) {
+            /*Handle success, user successfully paid, 
+            The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
+            */              
+        }
+    });
+    payWithWallet.start();
 ```
 
 
@@ -137,61 +140,73 @@ During development of your app, you should use the SDK in sandbox mode to enable
 
 * Validate card is used to check if a card is a valid card, it returns the card balance and token
 * To call validate card, use this code.
+
   Please note, supply your client id and client secret you got after registering as a merchant
+  
 ```java
     RequestOptions options = RequestOptions.builder().setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54").setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=").build();
-                final ValidateCard validateCard = new ValidateCard(activity, customerId, currency, options, new IswCallback<ValidateCardResponse>() {
+    ValidateCard validateCard = new ValidateCard(activity, customerId, currency, options, new IswCallback<ValidateCardResponse>() {
     
-                    @Override
-                    public void onError(Exception error) {
-                        //Handle error, user was unable to make successful payment
+        @Override
+        public void onError(Exception error) {
+            //Handle error, user was unable to make successful payment
 
-                    }
+        }
     
-                    @Override
-                    public void onSuccess(final ValidateCardResponse response) {
-                        /*Handle success, user successfully paid, returns a validate card response object that contains several fields about the successful payment just made. 
-                        The purchase response object contains fields such as amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
-                                                         */
-                    }
-                });
-                validateCard.start();
+        @Override
+        public void onSuccess(final ValidateCardResponse response) {
+            /*Handle success, user successfully paid, returns a validate card response object that contains several fields about the successful payment just made. 
+            The purchase response object contains fields such as amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
+                                             */
+        }
+    });
+    validateCard.start();
 ```
 
 
-### Pay with Token
+### Pay with Token (UI)
+
 * Interswitch Payment SDK allows you to generate a token in place of a user’s card details so that you can use it to debit the user at a later date without asking them for their card details again.
 * Anytime you pay with card, token is returned as part of the purchase response object    
 * The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token
+
+Please note, supply your client id and client secret you got after registering as a merchant
+
 ```java
+    RequestOptions options = RequestOptions.builder().setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54").setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=").build();
     PayWithToken payWithToken = new PayWithToken(activity, customerId, amount, token, expiryDate, currency, cardType panLast4Digits, paymentDescription, options, new IswCallback<PurchaseResponse>() {
     
-                    @Override
-                    public void onError(Exception error) {
-                        //Handle error, user was unable to make successful payment
+        @Override
+        public void onError(Exception error) {
+            //Handle error, user was unable to make successful payment
 
-                    }
-    
-                    @Override
-                    public void onSuccess(final PurchaseResponse response) {
-                        /*Handle success, user successfully paid, returns a purchase response object that contains several fields about the successful payment just made. 
-                         The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
-                                                         */   
-                    }
-                });
-                payWithToken.start();
+        }
+
+        @Override
+        public void onSuccess(final PurchaseResponse response) {
+            /*Handle success, user successfully paid, returns a purchase response object that contains several fields about the successful payment just made. 
+             The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
+                                             */   
+        }
+    });
+    payWithToken.start();
 ```
 
 
-## Using the SDK without UI
 
-### Accepting Payments with Card / Token
 
-Ask the user for card details
 
-In the onClick method of the button that asks the user to pay, add this code.
+
+## Using the SDK without UI (IN PCI-DSS SCOPE : YES)
+
+
+### Pay with Card/Token (NO UI)
+
+* Ask the user for card details
+* In the onClick method of the button that asks the user to pay, add this code.
 
 Please note, supply your client id and client secret you got after registering as a merchant
+
 ```java
 	//Setup client id and secret
     RequestOptions options = RequestOptions.builder()
@@ -234,7 +249,7 @@ Please note, supply your client id and client secret you got after registering a
 	
 ```
 
-## Accepting Payment with Wallet
+## Pay With Wallet (NO UI)
 
 First set your client id and client secret
 ```java
@@ -300,7 +315,7 @@ After populating the spinner, when the user selects an item and then clicks pay,
 	);
 ```
 
-##Checking status of payment
+## Checking status of payment
 
 To check the status of a payment made, use the code below
 
@@ -323,7 +338,7 @@ To check the status of a payment made, use the code below
 
 
 
-###Using android sdk to create Blackberry App
+### Using android sdk to create Blackberry App
 To create a Blackberry app using the **runtime for Android** 
 
 1. Create an android app as above using SDK provided for android
