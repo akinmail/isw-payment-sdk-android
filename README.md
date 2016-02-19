@@ -18,6 +18,8 @@ It consists of ​5 libraries:
 3. *payment-android-release.aar*
 4. *gson-2.​3.1.jar*
 5. *deviceprint-release-2.2.0.aar*
+6. *appcompat*
+7. *design*
 
 
 **Use Android Studio’s dependency management tool (Gradle) to add the libraries to your project.**
@@ -32,6 +34,8 @@ It consists of ​5 libraries:
 5. Select the **payment-android-release.aar**
 6. Repeat step 4 to step 5 to add **deviceprint-release-2.2.0.aar** to your project. Then select **deviceprint-release-2.2.0.aar** where applicable.
 7. To add the jar files, edit the build.gradle file of your app and add
+8. If you do not already have it, add the *appcompat* folder to your android sdk folder inside extras\android\support\v7
+9. If you do not already have it, add the *design* folder to your android sdk folder inside android\support
 
 ```java
     compile files('libs/core.jar')
