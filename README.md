@@ -29,29 +29,166 @@ It consists of ​5 libraries:
 3. Add **core.jar, payment.jar, payment-android-release.aar**, **deviceprint-release-2.2.0.aar** and **gson-2.​3.1.jar** to your project by putting them in the libs folder of the app.
 4. To add the **payment-android-release.aar** library, navigate to **File -> New -> New Module -> Import .JAR/.AAR Package** option in Android Studio.
 5. Select the **payment-android-release.aar**
-6. Repeat step 4 to step 5 to add **deviceprint-release-2.2.0.aar** to your project. Then select **deviceprint-release-2.2.0.aar** where apllicable.
-7. Finally, rebuild the project
+6. Repeat step 4 to step 5 to add **deviceprint-release-2.2.0.aar** to your project. Then select **deviceprint-release-2.2.0.aar** where applicable.
+7. To add the jar files, edit the build.gradle file of your app and add
+
+```java
+    compile files('libs/core.jar')
+    compile files('libs/gson-2.3.1.jar')
+    compile files('libs/payment.jar')
+```
+
+8. Finally, rebuild the project
 
 
 ### USING THE SDK IN SANDBOX MODE 
 
-The procedure to use the SDK on sandbox mode is just as easy, 
+During development of your app, you should use the SDK in sandbox mode to enable testing. Different client id and client secret are provided for Production and Sandbox mode. The procedure to use the SDK on sandbox mode is just as easy, 
 
-* Use sandbox client id and secret got from the developer console after signup(usually you have to wait for 5 minutes for you to see the sandbox details)              
-* Override the api base as follows 
+* Use sandbox client id and sandbox client secret got from the sandbox tab developer console after signup(usually you have to wait for 5 minutes after signup for you to see the sandbox details) everywhere you are required to supply client id and client secret in the remainder of this documentation              
+* In your code, override the api base as follows
 ```java
     Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
     Payment.overrideApiBase("https://sandbox.interswitchng.com"); 
 ```
-* Follow the remaining steps in the documentation 
+* Follow the remaining steps in the documentation. NOTE: When going into production mode, use the client id and the client secret got from the production tab of developer console instead
 
+
+
+## In App Payment SDK for Android
+
+### Pay
+
+* This option consists of both Pay with card and Pay with Wallet
+* Create a pay button
+* In the onClick listener of the paybutton, add this code.
+  Please note, supply your client id and client secret you got after registering as a merchant
+```java
+    RequestOptions options = RequestOptions.builder().setClientId("IKIA335B188FDC3527EDB1E9300D35F6C51826DFC8A5").setClientSecret("4HOFYiMJitFQeHYUCH/pvTF6jpiIaZqzVKB/pheK4Cs=").build();
+                    Pay pay = new Pay(activity, customerId, paymentDescription, amount, currency, options, new IswCallback<PurchaseResponse>()  {
+                        @Override
+                        public void onError(Exception error) {
+                            //Handle error
+                        }
+    
+                        @Override
+                        public void onSuccess(PurchaseResponse response) {
+                            /*Handle success, user successfully paid, returns a purchase response object that contains several fields about the successful payment just made. 
+    The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
+     */                     
+                        }
+                    });
+                    pay.start();
+
+```
+
+
+### Pay with card
+    
+* Create a pay button
+* In the onClick listener of the paybutton, add this code.
+  Please note, supply your client id and client secret you got after registering as a merchant
+```java
+    RequestOptions options = RequestOptions.builder().setClientId("IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276").setClientSecret("Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=").build();
+    PayWithCard payWithCard = new PayWithCard(activity, customerId, paymentDescription, amount, currency, options, new IswCallback<PurchaseResponse>() {
+    
+                        @Override
+                        public void onError(Exception error) {
+                            //Handle error, user was unable to make successful payment
+    
+                        }
+    
+                        @Override
+                        public void onSuccess(final PurchaseResponse response) {
+    				/*Handle success, user successfully paid, returns a purchase response object that contains several fields about the successful payment just made. 
+    The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
+     */                        
+                        }
+                    });
+                    payWithCard.start();
+
+```
+
+
+### Pay With Wallet
+
+* Create a pay button
+* In the onClick listener of the paybutton, add this code.
+  Please note, supply your client id and client secret you got after registering as a merchant
+```java
+    PayWithWallet payWithWallet = new PayWithWallet(activity, customerId, paymentDescription, amount, currency, options, new IswCallback<PurchaseResponse>() {
+                        @Override
+                        public void onError(Exception error) {
+                            //Handle error, user was unable to make successful payment
+                        }
+    
+                        @Override
+                        public void onSuccess(PurchaseResponse response) {
+                            /*Handle success, user successfully paid, returns a purchase response object that contains several fields about the successful payment just made. 
+                                The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
+                                 */              
+                        }
+                    });
+                    payWithWallet.start();
+```
+
+
+### Validate Card
+
+* Validate card is used to check if a card is a valid card, it returns the card balance and token
+* To call validate card, use this code.
+  Please note, supply your client id and client secret you got after registering as a merchant
+```java
+    RequestOptions options = RequestOptions.builder().setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54").setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=").build();
+                final ValidateCard validateCard = new ValidateCard(activity, customerId, currency, options, new IswCallback<ValidateCardResponse>() {
+    
+                    @Override
+                    public void onError(Exception error) {
+                        //Handle error, user was unable to make successful payment
+
+                    }
+    
+                    @Override
+                    public void onSuccess(final ValidateCardResponse response) {
+                        /*Handle success, user successfully paid, returns a validate card response object that contains several fields about the successful payment just made. 
+                        The purchase response object contains fields such as amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
+                                                         */
+                    }
+                });
+                validateCard.start();
+```
+
+
+### Pay with Token
+* Interswitch Payment SDK allows you to generate a token in place of a user’s card details so that you can use it to debit the user at a later date without asking them for their card details again.
+* Anytime you pay with card, token is returned as part of the purchase response object    
+* The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token
+```java
+    PayWithToken payWithToken = new PayWithToken(activity, customerId, amount, token, expiryDate, currency, cardType panLast4Digits, paymentDescription, options, new IswCallback<PurchaseResponse>() {
+    
+                    @Override
+                    public void onError(Exception error) {
+                        //Handle error, user was unable to make successful payment
+
+                    }
+    
+                    @Override
+                    public void onSuccess(final PurchaseResponse response) {
+                        /*Handle success, user successfully paid, returns a purchase response object that contains several fields about the successful payment just made. 
+                         The purchase response object contains fields such as transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType which have getter methods to get them. Save the token, tokenExpiryDate, cardType and panLast4Digits if you want to pay with token in future
+                                                         */   
+                    }
+                });
+                payWithToken.start();
+```
 
 
 ### Accepting Payments with Card / Token
 
 Ask the user for card details
 
-In the onClick method of the button that asks the user to pay, add this code
+In the onClick method of the button that asks the user to pay, add this code.
+
 Please note, supply your client id and client secret you got after registering as a merchant
 ```java
 	//Setup client id and secret
@@ -179,6 +316,10 @@ To check the status of a payment made, use the code below
     }
     });
 ```
+
+
+
+
 
 ###Using android sdk to create Blackberry App
 To create a Blackberry app using the **runtime for Android** 
