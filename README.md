@@ -274,7 +274,8 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     new WalletSDK(context, options).getPaymentMethods(request, new IswCallback<WalletResponse>() {
             @Override
             public void onError(Exception error) {
-                // Handle error and notify the user.
+                // Handle error
+                // Payment not successful.
             }
 
             @Override
@@ -289,21 +290,18 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 * Create a Pay button
 * In the onClick listener of the Pay button, use this code.
 
-```java
-    //Setup request parameters using the selected Payment Method
-    final PurchaseRequest request = new PurchaseRequest();
-    //Optional email, mobile no, BVN etc to uniquely identify the customer.
-    request.setCustomerId("1234567890");
-    //Amount in Naira
-    request.setAmount("100"); 
-    request.setCurrency("NGN");
+```java    
+    final PurchaseRequest request = new PurchaseRequest(); //Setup request parameters using the selected Payment Method   
+    request.setCustomerId("1234567890"); //Optional email, mobile no, BVN etc to uniquely identify the customer.   
+    request.setAmount("100"); //Amount in Naira
+    request.setCurrency("NGN"); // ISO Currency code
     if (paymethodSpinner.getSelectedItem() == null) {
         // Notify user no Payment Method selected.
         return;
     }
-    request.setPan(((PaymentMethod) paymethodSpinner.getSelectedItem()).getToken());
-    request.setPinData(pin.getText().toString());
-    request.setTransactionRef(RandomString.numeric(12));
+    request.setPan(((PaymentMethod) paymethodSpinner.getSelectedItem()).getToken()); //Card Token
+    request.setPinData(pin.getText().toString()); //Card PIN
+    request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
     //Send payment
     new WalletSDK(context, options).purchase(request, new IswCallback<PurchaseResponse>() {
             @Override
@@ -323,6 +321,30 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     );
 ```
 
+### Authorize Transaction With OTP
+```java
+    PurchaseRequest request = new PurchaseRequest(); //Setup request parameters using the selected Payment Method
+    request.setCustomerId("1234567890"); //Optional email, mobile no, BVN etc to uniquely identify the customer.
+    request.setAmount("100"); // Amount in Naira
+    request.setPan("5060990580000217499"); // Card No or Token
+    request.setPinData("1111"); // Card PIN
+    request.setCvv2("111"); // Card CVV
+    request.setExpiryDate("2004"); // Card or Token expiry date in YYMM format
+    request.setRequestorId("12345678901"); // Requestor Identifier
+    request.setCurrency("NGN"); // ISO Currency code
+    request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
+    PurchaseResponse response = new PurchaseClient(options).purchase(request); //The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType.
+    
+    if (StringUtils.hasText(response.getOtpTransactionIdentifier())) { // 
+                AuthorizeOtpRequest otpRequest = new AuthorizeOtpRequest(); // Setup request parameters using the selected Payment Method
+                otpRequest.setOtp("123456"); // Accept OTP from user
+                otpRequest.setOtpTransactionIdentifier(response.getOtpTransactionIdentifier()); // Set the OTP identifier for the request
+                otpRequest.setTransactionRef(response.getTransactionRef()); // Set the unique transaction reference.
+                AuthorizeOtpResponse otpResponse = new PurchaseClient(options).authorizeOtp(otpRequest); //Authorize OTP Request 
+                //Handle and notify user of successful transaction               
+    }
+```
+ 
 ### Checking Payment Status
 
 To check the status of a payment made, use the code below
@@ -346,7 +368,7 @@ To check the status of a payment made, use the code below
 
 
 
-## Using android sdk to create Blackberry App
+## Using Android SDK to Create Blackberry Application
 To create a Blackberry app using the **runtime for Android** 
 
 1. Create an android app as above using SDK provided for android
