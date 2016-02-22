@@ -258,7 +258,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     });
 ```
 
-## Pay with Wallet
+### Pay with Wallet
 
 * To allow for Payment with Wallet only
 * Create a UI to collect amount, CVV, expiry date and PIN and to display user's Payment Method(s). Use the code below to load the Payment Method(s) array in a Spinner
@@ -323,7 +323,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     );
 ```
 
-## Checking Payment Status
+### Checking Payment Status
 
 To check the status of a payment made, use the code below
 
@@ -346,7 +346,7 @@ To check the status of a payment made, use the code below
 
 
 
-### Using android sdk to create Blackberry App
+## Using android sdk to create Blackberry App
 To create a Blackberry app using the **runtime for Android** 
 
 1. Create an android app as above using SDK provided for android
