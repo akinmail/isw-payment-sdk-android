@@ -18,8 +18,6 @@ It consists of ​5 libraries:
 3. *payment-android-release.aar*
 4. *gson-2.​3.1.jar*
 5. *deviceprint-release-2.2.0.aar*
-6. *appcompat folder*
-7. *design folder*
 
 
 **Use Android Studio’s dependency management tool (Gradle) to add the libraries to your project.**
