@@ -32,7 +32,6 @@ It consists of ​5 libraries:
 5. Select the **payment-android-release.aar** in libs folder
 6. Repeat step 4 to step 5 to add **deviceprint-release-2.2.0.aar** to your project.
 7. To add the jar files, edit the build.gradle file of your app and add
-
 ```java
     compile files('libs/core.jar')
     compile files('libs/gson-2.3.1.jar')
@@ -40,7 +39,6 @@ It consists of ​5 libraries:
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
 ```
-
 8. Finally, rebuild the project
 
 
@@ -275,7 +273,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
             @Override
             public void onError(Exception error) {
                 // Handle error
-                // Payment not successful.
+                // Unable to get payment methods
             }
 
             @Override
@@ -322,19 +320,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 ```
 
 ### Authorize Transaction With OTP
-```java
-    PurchaseRequest request = new PurchaseRequest(); //Setup request parameters using the selected Payment Method
-    request.setCustomerId("1234567890"); //Optional email, mobile no, BVN etc to uniquely identify the customer.
-    request.setAmount("100"); // Amount in Naira
-    request.setPan("5060990580000217499"); // Card No or Token
-    request.setPinData("1111"); // Card PIN
-    request.setCvv2("111"); // Card CVV
-    request.setExpiryDate("2004"); // Card or Token expiry date in YYMM format
-    request.setRequestorId("12345678901"); // Requestor Identifier
-    request.setCurrency("NGN"); // ISO Currency code
-    request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
-    PurchaseResponse response = new PurchaseClient(options).purchase(request); //The response object contains fields transactionIdentifier, message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType.
-    
+```java    
     if (StringUtils.hasText(response.getOtpTransactionIdentifier())) { // 
                 AuthorizeOtpRequest otpRequest = new AuthorizeOtpRequest(); // Setup request parameters using the selected Payment Method
                 otpRequest.setOtp("123456"); // Accept OTP from user
