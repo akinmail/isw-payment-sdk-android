@@ -32,7 +32,6 @@ It consists of ​5 libraries:
 5. Select the **payment-android-release.aar** in libs folder
 6. Repeat step 4 to step 5 to add **deviceprint-release-2.2.0.aar** to your project.
 7. To add the jar files, edit the build.gradle file of your app and add
-
 ```java
     compile files('libs/core.jar')
     compile files('libs/gson-2.3.1.jar')
@@ -40,7 +39,6 @@ It consists of ​5 libraries:
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
 ```
-
 8. Finally, rebuild the project
 
 
@@ -274,7 +272,8 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     new WalletSDK(context, options).getPaymentMethods(request, new IswCallback<WalletResponse>() {
             @Override
             public void onError(Exception error) {
-                // Handle error and notify the user.
+                // Handle error
+                // Unable to get payment methods
             }
 
             @Override
@@ -289,21 +288,18 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 * Create a Pay button
 * In the onClick listener of the Pay button, use this code.
 
-```java
-    //Setup request parameters using the selected Payment Method
-    final PurchaseRequest request = new PurchaseRequest();
-    //Optional email, mobile no, BVN etc to uniquely identify the customer.
-    request.setCustomerId("1234567890");
-    //Amount in Naira
-    request.setAmount("100"); 
-    request.setCurrency("NGN");
+```java    
+    final PurchaseRequest request = new PurchaseRequest(); //Setup request parameters using the selected Payment Method   
+    request.setCustomerId("1234567890"); //Optional email, mobile no, BVN etc to uniquely identify the customer.   
+    request.setAmount("100"); //Amount in Naira
+    request.setCurrency("NGN"); // ISO Currency code
     if (paymethodSpinner.getSelectedItem() == null) {
         // Notify user no Payment Method selected.
         return;
     }
-    request.setPan(((PaymentMethod) paymethodSpinner.getSelectedItem()).getToken());
-    request.setPinData(pin.getText().toString());
-    request.setTransactionRef(RandomString.numeric(12));
+    request.setPan(((PaymentMethod) paymethodSpinner.getSelectedItem()).getToken()); //Card Token
+    request.setPinData(pin.getText().toString()); //Card PIN
+    request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
     //Send payment
     new WalletSDK(context, options).purchase(request, new IswCallback<PurchaseResponse>() {
             @Override
@@ -323,6 +319,18 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     );
 ```
 
+### Authorize Transaction With OTP
+```java    
+    if (StringUtils.hasText(response.getOtpTransactionIdentifier())) { // 
+                AuthorizeOtpRequest otpRequest = new AuthorizeOtpRequest(); // Setup request parameters using the selected Payment Method
+                otpRequest.setOtp("123456"); // Accept OTP from user
+                otpRequest.setOtpTransactionIdentifier(response.getOtpTransactionIdentifier()); // Set the OTP identifier for the request
+                otpRequest.setTransactionRef(response.getTransactionRef()); // Set the unique transaction reference.
+                AuthorizeOtpResponse otpResponse = new PurchaseClient(options).authorizeOtp(otpRequest); //Authorize OTP Request 
+                //Handle and notify user of successful transaction               
+    }
+```
+ 
 ### Checking Payment Status
 
 To check the status of a payment made, use the code below
@@ -346,7 +354,7 @@ To check the status of a payment made, use the code below
 
 
 
-## Using android sdk to create Blackberry App
+## Using Android SDK to Create Blackberry Application
 To create a Blackberry app using the **runtime for Android** 
 
 1. Create an android app as above using SDK provided for android
