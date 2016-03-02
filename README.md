@@ -50,7 +50,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
 * Use Sandbox Client Id and Client Secret got from the Sandbox Tab of the Developer Console after signup(usually you have to wait for 5 minutes after signup for you to see the Sandbox details) everywhere you are required to supply Client Id and Client Secret in the remainder of this documentation              
 * In your code, override the api base as follows
 ```java
-    Passport.overrideApiBase("https://sandbox.interswitchng.com/passport"); 
+    Passport.overrideApiBase("https://qa.interswitchng.com/passport"); 
     Payment.overrideApiBase(SANDBOX_API_BASE); 
 ```
 * Follow the remaining steps in the documentation.
