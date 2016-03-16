@@ -14,7 +14,7 @@ https://github.com/techquest/isw-payment-sdk-android/releases
 
 It consists of ​2 libraries:
 
-1. *payment-android*
+1. *payment-android:0.0.12-Beta*
 2. *deviceprint-release-2.2.0.aar*
 
 
