@@ -12,10 +12,9 @@ Download the latest SDK from the link below
 
 https://github.com/techquest/isw-payment-sdk-android/releases
 
-It consists of ​2 libraries:
+It consists of ​1 library:
 
-1. *payment-android:0.0.12-Beta*
-2. *deviceprint-release-2.2.0.aar*
+1. *deviceprint-release-2.2.0.aar*
 
 
 **Use Android Studio’s dependency management tool (Gradle) to add the libraries to your project.**
