@@ -12,13 +12,10 @@ Download the latest SDK from the link below
 
 https://github.com/techquest/isw-payment-sdk-android/releases
 
-It consists of ​5 libraries:
+It consists of ​2 libraries:
 
-1. *core.jar*
-2. *payment.jar*
-3. *payment-android-release.aar*
-4. *gson-2.​3.1.jar*
-5. *deviceprint-release-2.2.0.aar*
+1. *payment-android*
+2. *deviceprint-release-2.2.0.aar*
 
 
 **Use Android Studio’s dependency management tool (Gradle) to add the libraries to your project.**
@@ -28,19 +25,16 @@ It consists of ​5 libraries:
 
 1. Download **Android Studio 1.2.2** or later
 2. Create a New Project
-3. Put **core.jar, payment.jar, payment-android-release.aar**, **deviceprint-release-2.2.0.aar** and **gson-2.​3.1.jar** in the libs folder of the app.
-4. To add the **payment-android-release.aar** library to your project, navigate to **File -> New -> New Module -> Import .JAR/.AAR Package** option in Android Studio.
-5. Select the **payment-android-release.aar** in libs folder
-6. Repeat step 4 to step 5 to add **deviceprint-release-2.2.0.aar** to your project.
-7. To add the jar files, edit the build.gradle file of your app and add
+3. Put **deviceprint-release-2.2.0.aar** in the libs folder of the app.
+4. To add the **deviceprint-release-2.2.0.aar** library to your project, navigate to **File -> New -> New Module -> Import .JAR/.AAR Package** option in Android Studio.
+5. Select the **deviceprint-release-2.2.0.aar** in libs folder
+6. To add the jar files, edit the build.gradle file of your app and add
 ```java
-    compile files('libs/core.jar')
-    compile files('libs/gson-2.3.1.jar')
-    compile files('libs/payment.jar')
+    compile 'com.interswitchng:payment-android:0.0.12-Beta'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
 ```
-8. Finally, rebuild the project
+7. Finally, rebuild the project
 
 
 ### Using The SDK in Sandbox Mode 
@@ -50,8 +44,8 @@ During development of your app, you should use the SDK in sandbox mode to enable
 * Use Sandbox Client Id and Client Secret got from the Sandbox Tab of the Developer Console after signup(usually you have to wait for 5 minutes after signup for you to see the Sandbox details) everywhere you are required to supply Client Id and Client Secret in the remainder of this documentation              
 * In your code, override the api base as follows
 ```java
-    Passport.overrideApiBase("https://qa.interswitchng.com/passport"); 
-    Payment.overrideApiBase(SANDBOX_API_BASE); 
+    Passport.overrideApiBase(Passport.SANDBOX_API_BASE); 
+    Payment.overrideApiBase(Payment.SANDBOX_API_BASE); 
 ```
 * Follow the remaining steps in the documentation.
 * NOTE: When going into Production mode, use the Client Id and the Client Secret got from the Production Tab of Developer Console instead.
@@ -202,9 +196,6 @@ During development of your app, you should use the SDK in sandbox mode to enable
     });
     payWithToken.start();
 ```
-
-
-
 
 
 
