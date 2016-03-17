@@ -12,15 +12,15 @@ Download the latest SDK from the link below
 
 https://github.com/techquest/isw-payment-sdk-android/releases
 
-It consists of ​1 library:
+It consists of ​a library:
 
 1. *deviceprint-release-2.2.0.aar*
 
 
-**Use Android Studio’s dependency management tool (Gradle) to add the libraries to your project.**
+**Use Android Studio’s dependency management tool (Gradle) to add the library to your project.**
 
 
-### Creating a Project and Adding Libraries Using Android Studio
+### Creating a Project and Adding Library Using Android Studio
 
 1. Download **Android Studio 1.2.2** or later
 2. Create a New Project
@@ -308,6 +308,49 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
                 }
             }
     );
+```
+### Validate Card and Get Token
+* To check if a card is valid and get a token
+* Create a UI to collect card details
+* Create a Validate/Add Card button
+* In the onClick listener of the Validate/Add Card button, use this code.
+
+Note: Supply your Client Id and Client Secret you got after registering as a Merchant
+
+```java
+    RequestOptions options = RequestOptions.builder().setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E").setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=").build();
+    ValidateCardRequest request = new ValidateCardRequest(); // Setup request parameters
+    request.setCustomerId("1234567890"); // Optional email, mobile no, BVN etc to uniquely identify the customer.
+    request.setPan("5060100000000000012"); //Card No or Token
+    request.setPinData("1111"); // Optional Card PIN for card payment
+    request.setExpiryDate("2004"); // Card or Token expiry date in YYMM format
+    request.setCvv2("111");
+    request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
+    Context context = this; // Reference to your Android Activity
+
+    new PaymentSDK(context, options).validateCard(request, new IswCallback<ValidateCardResponse>() { //Send payment
+
+            @Override
+            public void onError(Exception error) {
+                // Handle error and notify the user.
+                // Payment not successful.
+            }
+
+            @Override
+            public void onSuccess(ValidateCardResponse response) {
+                // Check if OTP is required.
+                if (StringUtils.hasText(response.getOtpTransactionIdentifier())) {
+                   // OTP required.
+                   // Ask user for OTP and authorize transaction using the otpTransactionIdentifier.
+                   // See how to authorize transaction with OTP below.
+                }
+                else {
+                 // OTP not required.
+                 // Handle and notify user of successful validation. A token for the card details is returned in the response.
+                }
+                // The response object contains fields transactionIdentifier, message,token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType. Save the token, tokenExpiryDate, cardType and panLast4Digits in order to pay with the token in the future.
+            }
+    });
 ```
 
 ### Authorize Transaction With OTP
