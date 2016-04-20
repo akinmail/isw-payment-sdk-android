@@ -1,13 +1,19 @@
+# Table of Contents
+- [Payment SDK for Android](#PaymentSDK)
+- [Download the latest SDK](#DownloadSDK)
+- [Creating a Project and Adding Library Using Android Studio](#CreateProject)
+- [Using The SDK in Sandbox Mode](#SandBoxMode)
+
 - [Validate Card](#ValidateCard)
 
-## Payment SDK for Android
+## <a name='PaymentSDK'></a> Payment SDK for Android
 
 Interswitch payment SDK allows you to accept payments from customers within your mobile application.
 **Please Note: *The current supported currency is naira (NGN), support for other currencies would be added later***
 The first step to ​using the ​Android SDK is to register as a merchant. This is described [here] (merchantxuat.interswitchng.com)
 
 
-### Download the latest SDK
+### <a name='DownloadSDK'></a> Download the latest SDK
 
 
 Download the latest SDK from the link below
@@ -22,7 +28,7 @@ It consists of ​a library:
 **Use Android Studio’s dependency management tool (Gradle) to add the library to your project.**
 
  
-### Creating a Project and Adding Library Using Android Studio
+### <a name='CreateProject'></a> Creating a Project and Adding Library Using Android Studio
 
 1. Download **Android Studio 1.2.2** or later
 2. Create a New Project
@@ -38,7 +44,7 @@ It consists of ​a library:
 7. Finally, rebuild the project
 
 
-### Using The SDK in Sandbox Mode
+### <a name='SandBoxMode'></a> Using The SDK in Sandbox Mode
 
 During development of your app, you should use the SDK in sandbox mode to enable testing. Different Client Id and Client Secret are provided for Production and Sandbox mode. The procedure to use the SDK on sandbox mode is just as easy:
 
