@@ -1,7 +1,4 @@
-# Contents
-
-- [Using The SDK in Sandbox Mode](#Using-The-SDK-in-Sandbox-Mode)
-- [Pay with Card](#Pay-with-Card)
+- [Before you begin](#BeforeYouBegin)
 
 ## Payment SDK for Android
 
@@ -24,7 +21,7 @@ It consists of ​a library:
 
 **Use Android Studio’s dependency management tool (Gradle) to add the library to your project.**
 
-
+ 
 ### Creating a Project and Adding Library Using Android Studio
 
 1. Download **Android Studio 1.2.2** or later
@@ -41,7 +38,7 @@ It consists of ​a library:
 7. Finally, rebuild the project
 
 
-### Using The SDK in Sandbox Mode 
+### Using The SDK in Sandbox Mode
 
 During development of your app, you should use the SDK in sandbox mode to enable testing. Different Client Id and Client Secret are provided for Production and Sandbox mode. The procedure to use the SDK on sandbox mode is just as easy:
 
@@ -143,7 +140,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
     payWithWallet.start();
 ```
 
-
+### <a id='BeforeYouBegin'></a>Before you begin
 ### Validate Card
 
 * Validate card is used to check if a card is a valid card, it returns the card balance and token
