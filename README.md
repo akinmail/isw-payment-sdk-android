@@ -1,4 +1,4 @@
-- [Before you begin](#BeforeYouBegin)
+- [Validate Card](#ValidateCard)
 
 ## Payment SDK for Android
 
@@ -140,8 +140,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
     payWithWallet.start();
 ```
 
-### <a name='BeforeYouBegin'></a>Before you begin
-### Validate Card
+### <a name='ValidateCard'></a>Validate Card 
 
 * Validate card is used to check if a card is a valid card, it returns the card balance and token
 * To call validate card, use this code.
