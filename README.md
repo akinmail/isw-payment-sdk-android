@@ -140,7 +140,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
     payWithWallet.start();
 ```
 
-### <a id='BeforeYouBegin'></a>Before you begin
+### <a name='BeforeYouBegin'></a>Before you begin
 ### Validate Card
 
 * Validate card is used to check if a card is a valid card, it returns the card balance and token
