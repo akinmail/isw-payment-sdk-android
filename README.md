@@ -1,7 +1,7 @@
 # Contents
 
-- [Using The SDK in Sandbox Mode](#title)
-- [Pay with Card](#big-title)
+- [Using The SDK in Sandbox Mode](#Using-The-SDK-in-Sandbox-Mode)
+- [Pay with Card](#Pay-with-Card)
 
 ## Payment SDK for Android
 
