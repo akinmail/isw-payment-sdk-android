@@ -1,66 +1,80 @@
-## Payment SDK for Android
+# Table of Contents
+1. [Payment SDK for Android](#PaymentSDK)
+  * [Download the latest SDK](#DownloadSDK)
+  * [Creating a Project and Adding Library Using Android Studio](#CreateProject)
+  * [Using The SDK in Sandbox Mode](#SandBoxMode)
+  
+2. [Using the SDK with UI (In PCI-DSS Scope: No )](#SDKWithUI)   
+   * [Pay with Card/Wallet](#Pay)
+   * [Pay with Card](#PayWithCard)
+   * [Pay with Wallet](#PayWithWallet)
+   * [Validate Card](#ValidateCard)
+   * [Pay With Token](#PayWithToken)
+   
+3. [Using the SDK without UI (In PCI-DSS Scope: Yes)](#SDKWithOutUI)
+   * [Pay with Card/Token](#PayWithCardToken)
+   * [Pay with Wallet](#PayWithWalletNoUI)
+   * [Validate Card and Get Token](#ValidateCardNoUI)
+   * [Authorize Transaction With OTP](#AuthorizeOTP)
+   * [Checking Payment Status](#PaymentStatus)
+3. [Using Android SDK to Create Blackberry Application](#BlackBerry)
+   
+## <a name='PaymentSDK'></a> Payment SDK for Android
 
 Interswitch payment SDK allows you to accept payments from customers within your mobile application.
 **Please Note: *The current supported currency is naira (NGN), support for other currencies would be added later***
 The first step to ​using the ​Android SDK is to register as a merchant. This is described [here] (merchantxuat.interswitchng.com)
 
 
-### Download the latest SDK
+### <a name='DownloadSDK'></a> Download the latest SDK
 
 
 Download the latest SDK from the link below
 
 https://github.com/techquest/isw-payment-sdk-android/releases
 
-It consists of ​5 libraries:
+It consists of ​a library:
 
-1. *core.jar*
-2. *payment.jar*
-3. *payment-android-release.aar*
-4. *gson-2.​3.1.jar*
-5. *deviceprint-release-2.2.0.aar*
+1. *deviceprint-release-2.2.0.aar*
 
 
-**Use Android Studio’s dependency management tool (Gradle) to add the libraries to your project.**
+**Use Android Studio’s dependency management tool (Gradle) to add the library to your project.**
 
-
-### Creating a Project and Adding Libraries Using Android Studio
+ 
+### <a name='CreateProject'></a> Creating a Project and Adding Library Using Android Studio
 
 1. Download **Android Studio 1.2.2** or later
 2. Create a New Project
-3. Put **core.jar, payment.jar, payment-android-release.aar**, **deviceprint-release-2.2.0.aar** and **gson-2.​3.1.jar** in the libs folder of the app.
-4. To add the **payment-android-release.aar** library to your project, navigate to **File -> New -> New Module -> Import .JAR/.AAR Package** option in Android Studio.
-5. Select the **payment-android-release.aar** in libs folder
-6. Repeat step 4 to step 5 to add **deviceprint-release-2.2.0.aar** to your project.
-7. To add the jar files, edit the build.gradle file of your app and add
+3. Put **deviceprint-release-2.2.0.aar** in the libs folder of the app.
+4. To add the **deviceprint-release-2.2.0.aar** library to your project, navigate to **File -> New -> New Module -> Import .JAR/.AAR Package** option in Android Studio.
+5. Select the **deviceprint-release-2.2.0.aar** in libs folder
+6. To add the jar files, edit the build.gradle file of your app and add
 ```java
-    compile files('libs/core.jar')
-    compile files('libs/gson-2.3.1.jar')
-    compile files('libs/payment.jar')
+    compile 'com.interswitchng:payment-android:0.0.12-Beta'
     compile 'com.android.support:appcompat-v7:23.1.1'
     compile 'com.android.support:design:23.1.1'
 ```
-8. Finally, rebuild the project
+7. Finally, rebuild the project
 
 
-### Using The SDK in Sandbox Mode 
+### <a name='SandBoxMode'></a> Using The SDK in Sandbox Mode
 
 During development of your app, you should use the SDK in sandbox mode to enable testing. Different Client Id and Client Secret are provided for Production and Sandbox mode. The procedure to use the SDK on sandbox mode is just as easy:
 
 * Use Sandbox Client Id and Client Secret got from the Sandbox Tab of the Developer Console after signup(usually you have to wait for 5 minutes after signup for you to see the Sandbox details) everywhere you are required to supply Client Id and Client Secret in the remainder of this documentation              
 * In your code, override the api base as follows
 ```java
-    Passport.overrideApiBase("https://qa.interswitchng.com/passport"); 
-    Payment.overrideApiBase(SANDBOX_API_BASE); 
+    Passport.overrideApiBase(Passport.SANDBOX_API_BASE); 
+    Payment.overrideApiBase(Payment.SANDBOX_API_BASE); 
 ```
 * Follow the remaining steps in the documentation.
 * NOTE: When going into Production mode, use the Client Id and the Client Secret got from the Production Tab of Developer Console instead.
 
 
 
-## Using the SDK with UI (In PCI-DSS Scope: No )
+## <a name='SDKWithUI'></a>Using the SDK with UI (In PCI-DSS Scope: No )
 
-### Pay with Card/Wallet
+### <a name='Pay'>Pay with Card/Wallet
 
 * To allow for Payment with Card or Wallet
 * Create a Pay button
@@ -88,7 +102,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```
 
 
-### Pay with Card
+### <a name='PayWithCard'>Pay with Card
     
 * To allow for Payment with Card only
 * Create a Pay button
@@ -118,7 +132,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```
 
 
-### Pay With Wallet
+### <a name='PayWithWallet'>Pay With Wallet
 
 * To allow for Payment with Wallet only
 * Create a Pay button
@@ -145,8 +159,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
     payWithWallet.start();
 ```
 
-
-### Validate Card
+### <a name='ValidateCard'></a>Validate Card 
 
 * Validate card is used to check if a card is a valid card, it returns the card balance and token
 * To call validate card, use this code.
@@ -175,7 +188,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```
 
 
-### Pay with Token
+### <a name='PayWithToken'></a> Pay with Token
 
 * To allow for Payment with Token only
 * Create a Pay button
@@ -205,13 +218,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
 
 
 
+## <a name='SDKWithOutUI'></a>Using the SDK without UI (In PCI-DSS Scope: Yes)
 
 
-
-## Using the SDK without UI (In PCI-DSS Scope: Yes)
-
-
-### Pay with Card/Token
+### <a name='PayWithCardToken'></a>Pay with Card/Token
 
 * To allow for Payment with Card or Token
 * Create a UI to collect amount and card details
@@ -258,7 +268,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     });
 ```
 
-### Pay with Wallet
+### <a name='PayWithWalletNoUI'></a>Pay with Wallet
 
 * To allow for Payment with Wallet only
 * Create a UI to collect amount, CVV, expiry date and PIN and to display user's Payment Method(s). Use the code below to load the Payment Method(s) array in a Spinner
@@ -320,7 +330,53 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
             }
     );
 ```
+### <a name='ValidateCardNoUI'></a> Validate Card and Get Token
+* To check if a card is valid and get a token
+* Create a UI to collect card details
+* Create a Validate/Add Card button
+* In the onClick listener of the Validate/Add Card button, use this code.
 
+Note: Supply your Client Id and Client Secret you got after registering as a Merchant
+
+```java
+    RequestOptions options = RequestOptions.builder().setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E").setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=").build();
+    ValidateCardRequest request = new ValidateCardRequest(); // Setup request parameters
+    request.setCustomerId("1234567890"); // Optional email, mobile no, BVN etc to uniquely identify the customer.
+    request.setPan("5060100000000000012"); //Card No or Token
+    request.setPinData("1111"); // Optional Card PIN for card payment
+    request.setExpiryDate("2004"); // Card or Token expiry date in YYMM format
+    request.setCvv2("111");
+    request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
+    Context context = this; // Reference to your Android Activity
+
+    new PaymentSDK(context, options).validateCard(request, new IswCallback<ValidateCardResponse>() { //Send payment
+
+            @Override
+            public void onError(Exception error) {
+                // Handle error and notify the user.
+                // Payment not successful.
+            }
+
+            @Override
+            public void onSuccess(ValidateCardResponse response) {
+                // Check if OTP is required.
+                if (StringUtils.hasText(response.getOtpTransactionIdentifier())) {
+                   // OTP required.
+                   // Ask user for OTP and authorize transaction using the otpTransactionIdentifier.
+                   // See how to authorize transaction with OTP below.
+                }
+                else {
+                 // OTP not required.
+                 // Handle and notify user of successful validation. A token for the card details is returned in the response.
+                }
+                // The response object contains fields transactionIdentifier, message,token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType. Save the token, tokenExpiryDate, cardType and panLast4Digits in order to pay with the token in the future.
+            }
+    });
+```
+
+<<<<<<< HEAD
+### <a name='AuthorizeOTP'></a>Authorize Transaction With OTP
+=======
 ### Validate Card and Get Token
 
 * To check if a card is valid and get a token
@@ -367,6 +423,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 ```
 
 ### Authorize Transaction With OTP
+>>>>>>> d39b576b1c8dc364f8996a36c9e08ad96ff2e58e
 ```java    
     if (StringUtils.hasText(response.getOtpTransactionIdentifier())) { // 
                 AuthorizeOtpRequest otpRequest = new AuthorizeOtpRequest(); // Setup request parameters using the selected Payment Method
@@ -378,13 +435,16 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     }
 ```
  
-### Checking Payment Status
+### <a name='PaymentStatus'></a>Checking Payment Status
 
 To check the status of a payment made, use the code below
 
 ```java
 	//Pass the transactionRef and the amount as the parameters to getPaymentStatus()
-	new WalletSDK(context, options).getPaymentStatus("117499114589", "100", new IswCallback<PaymentStatusResponse>() {
+	PaymentStatusRequest request = new PaymentStatusRequest();	 
+	request.setTransactionRef("117499114589");
+	request.setAmount("100");
+	new PaymentSDK(context, options).getPaymentStatus(request, new IswCallback<PaymentStatusResponse>() {
             @Override
             public void onError(Exception error) {
                 // Handle and notify user of error
@@ -401,7 +461,7 @@ To check the status of a payment made, use the code below
 
 
 
-## Using Android SDK to Create Blackberry Application
+## <a name='BlackBerry'></a>Using Android SDK to Create Blackberry Application
 To create a Blackberry app using the **runtime for Android** 
 
 1. Create an android app as above using SDK provided for android
