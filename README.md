@@ -14,7 +14,7 @@
 3. [Using the SDK without UI (In PCI-DSS Scope: Yes)](#SDKWithOutUI)
    * [Pay with Card/Token](#PayWithCardToken)
    * [Pay with Wallet](#PayWithWalletNoUI)
-   * [Validate Card](#ValidateCardNoUI)
+   * [Validate Card and Get Token](#ValidateCardNoUI)
    * [Authorize Transaction With OTP](#AuthorizeOTP)
    * [Checking Payment Status](#PaymentStatus)
 3. [Using Android SDK to Create Blackberry Application](#BlackBerry)
