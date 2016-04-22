@@ -391,7 +391,10 @@ To check the status of a payment made, use the code below
 
 ```java
 	//Pass the transactionRef and the amount as the parameters to getPaymentStatus()
-	new WalletSDK(context, options).getPaymentStatus("117499114589", "100", new IswCallback<PaymentStatusResponse>() {
+	PaymentStatusRequest request = new PaymentStatusRequest();	 
+	request.setTransactionRef("117499114589");
+	request.setAmount("100");
+	new PaymentSDK(context, options).getPaymentStatus(request, new IswCallback<PaymentStatusResponse>() {
             @Override
             public void onError(Exception error) {
                 // Handle and notify user of error
