@@ -1,10 +1,15 @@
 # Table of Contents
-- [Payment SDK for Android](#PaymentSDK)
-- [Download the latest SDK](#DownloadSDK)
-- [Creating a Project and Adding Library Using Android Studio](#CreateProject)
-- [Using The SDK in Sandbox Mode](#SandBoxMode)
-
-- [Validate Card](#ValidateCard)
+1. [Payment SDK for Android](#PaymentSDK)
+  * [Download the latest SDK](#DownloadSDK)
+  * [Creating a Project and Adding Library Using Android Studio](#CreateProject)
+  * [Using The SDK in Sandbox Mode](#SandBoxMode)
+  
+2. [Using the SDK with UI (In PCI-DSS Scope: No )](#SDKWithUI)   
+   * [Pay with Card/Wallet](#Pay)
+   * [Pay with Card](#PayWithCard)
+   * [Pay with Wallet](#PayWithWallet)
+   * [Validate Card](#ValidateCard)
+   * [Pay With Token](#PayWithToken)
 
 ## <a name='PaymentSDK'></a> Payment SDK for Android
 
@@ -59,9 +64,9 @@ During development of your app, you should use the SDK in sandbox mode to enable
 
 
 
-## Using the SDK with UI (In PCI-DSS Scope: No )
+## <a name='SDKWithUI'></a>Using the SDK with UI (In PCI-DSS Scope: No )
 
-### Pay with Card/Wallet
+### <a name='Pay'>Pay with Card/Wallet
 
 * To allow for Payment with Card or Wallet
 * Create a Pay button
@@ -89,7 +94,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```
 
 
-### Pay with Card
+### <a name='PayWithCard'>Pay with Card
     
 * To allow for Payment with Card only
 * Create a Pay button
@@ -119,7 +124,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```
 
 
-### Pay With Wallet
+### <a name='PayWithWallet'>Pay With Wallet
 
 * To allow for Payment with Wallet only
 * Create a Pay button
@@ -175,7 +180,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```
 
 
-### Pay with Token
+### <a name='PayWithToken'></a> Pay with Token
 
 * To allow for Payment with Token only
 * Create a Pay button
