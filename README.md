@@ -10,7 +10,15 @@
    * [Pay with Wallet](#PayWithWallet)
    * [Validate Card](#ValidateCard)
    * [Pay With Token](#PayWithToken)
-
+   
+3. [Using the SDK without UI (In PCI-DSS Scope: Yes)](#SDKWithOutUI)
+   * [Pay with Card/Token](#PayWithCardToken)
+   * [Pay with Wallet](#PayWithWalletNoUI)
+   * [Validate Card](#ValidateCardNoUI)
+   * [Authorize Transaction With OTP](#AuthorizeOTP)
+   * [Checking Payment Status](#PaymentStatus)
+3. [Using Android SDK to Create Blackberry Application](#BlackBerry)
+   
 ## <a name='PaymentSDK'></a> Payment SDK for Android
 
 Interswitch payment SDK allows you to accept payments from customers within your mobile application.
@@ -210,10 +218,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
 
 
 
-## Using the SDK without UI (In PCI-DSS Scope: Yes)
+## <a name='SDKWithOutUI'></a>Using the SDK without UI (In PCI-DSS Scope: Yes)
 
 
-### Pay with Card/Token
+### <a name='PayWithCardToken'></a>Pay with Card/Token
 
 * To allow for Payment with Card or Token
 * Create a UI to collect amount and card details
@@ -259,7 +267,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     });
 ```
 
-### Pay with Wallet
+### <a name='PayWithWalletNoUI'></a>Pay with Wallet
 
 * To allow for Payment with Wallet only
 * Create a UI to collect amount, CVV, expiry date and PIN and to display user's Payment Method(s). Use the code below to load the Payment Method(s) array in a Spinner
@@ -321,7 +329,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
             }
     );
 ```
-### Validate Card and Get Token
+### <a name='ValidateCardNoUI'></a> Validate Card and Get Token
 * To check if a card is valid and get a token
 * Create a UI to collect card details
 * Create a Validate/Add Card button
@@ -365,7 +373,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     });
 ```
 
-### Authorize Transaction With OTP
+### <a name='AuthorizeOTP'></a>Authorize Transaction With OTP
 ```java    
     if (StringUtils.hasText(response.getOtpTransactionIdentifier())) { // 
                 AuthorizeOtpRequest otpRequest = new AuthorizeOtpRequest(); // Setup request parameters using the selected Payment Method
@@ -377,7 +385,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     }
 ```
  
-### Checking Payment Status
+### <a name='PaymentStatus'></a>Checking Payment Status
 
 To check the status of a payment made, use the code below
 
@@ -400,7 +408,7 @@ To check the status of a payment made, use the code below
 
 
 
-## Using Android SDK to Create Blackberry Application
+## <a name='BlackBerry'></a>Using Android SDK to Create Blackberry Application
 To create a Blackberry app using the **runtime for Android** 
 
 1. Create an android app as above using SDK provided for android
