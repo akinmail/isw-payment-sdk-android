@@ -426,7 +426,8 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     RequestOptions options = RequestOptions.builder().setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E")
     .setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=").build();
     ValidateCardRequest request = new ValidateCardRequest(); // Setup request parameters
-    request.setCustomerId("1234567890"); // Optional email, mobile no, BVN etc to uniquely identify the customer.
+    // Optional email, mobile no, BVN etc to uniquely identify the customer.
+    request.setCustomerId("1234567890"); 
     request.setPan("5060100000000000012"); //Card No or Token
     request.setPinData("1111"); // Optional Card PIN for card payment
     request.setExpiryDate("2004"); // Card or Token expiry date in YYMM format
