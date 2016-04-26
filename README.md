@@ -334,7 +334,8 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 ```java    
     final PurchaseRequest request = new PurchaseRequest(); 
     //Setup request parameters using the selected Payment Method   
-    request.setCustomerId("1234567890"); //Optional email, mobile no, BVN etc to uniquely identify the customer.   
+    //Optional email, mobile no, BVN etc to uniquely identify the customer.
+    request.setCustomerId("1234567890");   
     request.setAmount("100"); //Amount in Naira
     request.setCurrency("NGN"); // ISO Currency code
     if (paymethodSpinner.getSelectedItem() == null) {
