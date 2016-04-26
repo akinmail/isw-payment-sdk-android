@@ -185,7 +185,8 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```java
     RequestOptions options = RequestOptions.builder().setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54")
     .setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=").build();
-    ValidateCard validateCard = new ValidateCard(activity, customerId, options, new IswCallback<ValidateCardResponse>() {
+    ValidateCard validateCard = new ValidateCard(activity, customerId, options, 
+    new IswCallback<ValidateCardResponse>() {
     
         @Override
         public void onError(Exception error) {
@@ -286,7 +287,8 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
                 }
                 else {
                  // OTP not required.
-                 // Handle and notify user of successful transaction. A token for the card details is returned in the response.
+                 // Handle and notify user of successful transaction. 
+                 // A token for the card details is returned in the response.
                 }
                 // The response object contains fields transactionIdentifier, message, 
                 // amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, 
@@ -330,7 +332,8 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 * In the onClick listener of the Pay button, use this code.
 
 ```java    
-    final PurchaseRequest request = new PurchaseRequest(); //Setup request parameters using the selected Payment Method   
+    final PurchaseRequest request = new PurchaseRequest(); 
+    //Setup request parameters using the selected Payment Method   
     request.setCustomerId("1234567890"); //Optional email, mobile no, BVN etc to uniquely identify the customer.   
     request.setAmount("100"); //Amount in Naira
     request.setCurrency("NGN"); // ISO Currency code
@@ -397,7 +400,8 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
                 }
                 else {
                  // OTP not required.
-                 // Handle and notify user of successful validation. A token for the card details is returned in the response.
+                 // Handle and notify user of successful validation. 
+                 // A token for the card details is returned in the response.
                 }
                 // The response object contains fields transactionIdentifier, 
                 // message,token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier
