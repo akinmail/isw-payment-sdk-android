@@ -85,7 +85,8 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```java
     RequestOptions options = RequestOptions.builder().setClientId("IKIA335B188FDC3527EDB1E9300D35F6C51826DFC8A5")
     .setClientSecret("4HOFYiMJitFQeHYUCH/pvTF6jpiIaZqzVKB/pheK4Cs=").build();
-    Pay pay = new Pay(activity, customerId, paymentDescription, amount, currency, options, new IswCallback<PurchaseResponse>()  {
+    Pay pay = new Pay(activity, customerId, paymentDescription, amount, currency, options, 
+    new IswCallback<PurchaseResponse>()  {
         @Override
         public void onError(Exception error) {
             // Handle error.
@@ -97,7 +98,8 @@ During development of your app, you should use the SDK in sandbox mode to enable
         /* Handle success.
            Payment successful. The response object contains fields transactionIdentifier, 
            message, amount, token, tokenExpiryDate, panLast4Digits, transactionRef and cardType. 
-           Save the token, tokenExpiryDate, cardType and panLast4Digits in order to pay with the token in the future.
+           Save the token, tokenExpiryDate, cardType and panLast4Digits 
+           in order to pay with the token in the future.
         */
        }
     });
@@ -129,9 +131,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
         @Override
         public void onSuccess(final PurchaseResponse response) {
             /* Handle success
-               Payment successful. The response object contains fields transactionIdentifier, message, amount,
-                token, tokenExpiryDate, panLast4Digits, transactionRef and cardType. Save the token, tokenExpiryDate, 
-                cardType and panLast4Digits in order to pay with the token in the future.
+               Payment successful. The response object contains fields transactionIdentifier, 
+               message, amount, token, tokenExpiryDate, panLast4Digits, transactionRef and cardType. 
+               Save the token, tokenExpiryDate, cardType and panLast4Digits in order to 
+               pay with the token in the future.
             */
         }
     });
@@ -161,9 +164,11 @@ During development of your app, you should use the SDK in sandbox mode to enable
         @Override
         public void onSuccess(PurchaseResponse response) {
             /* Handle success
-               Payment successful. The response object contains fields transactionIdentifier, message, amount
-                token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType. 
-                Save the token, tokenExpiryDate, cardType and panLast4Digits in order to pay with the token in the future.
+               Payment successful. The response object contains fields transactionIdentifier, 
+               message, amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, 
+               transactionRef and cardType. 
+               Save the token, tokenExpiryDate, cardType and panLast4Digits 
+               in order to pay with the token in the future.
             */
         }
     });
@@ -225,9 +230,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
         @Override
         public void onSuccess(final PurchaseResponse response) {
             /* Handle success
-               Payment successful. The response object contains fields transactionIdentifier, message, amount
-               token, tokenExpiryDate, panLast4Digits, transactionRef and cardType. Save the token, tokenExpiryDate
-               cardType and panLast4Digits in order to pay with the token in the future.
+               Payment successful. The response object contains fields transactionIdentifier,
+               message, amount, token, tokenExpiryDate, panLast4Digits, transactionRef and cardType. 
+               Save the token, tokenExpiryDate cardType and panLast4Digits 
+               in order to pay with the token in the future.
             */
         }
     });
@@ -262,8 +268,8 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
     Context context = this; // Reference to your Android Activity
 
-    new PaymentSDK(context, options).purchase(request, new IswCallback<PurchaseResponse>() { //Send payment
-
+    new PaymentSDK(context, options).purchase(request, new IswCallback<PurchaseResponse>() { 
+            //Send payment
             @Override
             public void onError(Exception error) {
                 // Handle error and notify the user.
@@ -282,9 +288,10 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
                  // OTP not required.
                  // Handle and notify user of successful transaction. A token for the card details is returned in the response.
                 }
-                // The response object contains fields transactionIdentifier, message, amount
-                // token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType. 
-                //Save the token, tokenExpiryDate, cardType and panLast4Digits in order to pay with the token in the future.
+                // The response object contains fields transactionIdentifier, message, 
+                // amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, 
+                // transactionRef and cardType. Save the token, tokenExpiryDate, cardType and 
+                // panLast4Digits in order to pay with the token in the future.
             }
     });
 ```
@@ -372,8 +379,8 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
     Context context = this; // Reference to your Android Activity
 
-    new PaymentSDK(context, options).validateCard(request, new IswCallback<ValidateCardResponse>() { //Send payment
-
+    new PaymentSDK(context, options).validateCard(request, new IswCallback<ValidateCardResponse>() { 
+            //Send payment
             @Override
             public void onError(Exception error) {
                 // Handle error and notify the user.
@@ -392,9 +399,11 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
                  // OTP not required.
                  // Handle and notify user of successful validation. A token for the card details is returned in the response.
                 }
-                // The response object contains fields transactionIdentifier, message,token
-                // tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType. 
-                //Save the token, tokenExpiryDate, cardType and panLast4Digits in order to pay with the token in the future.
+                // The response object contains fields transactionIdentifier, 
+                // message,token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier
+                // transactionRef and cardType. 
+                // Save the token, tokenExpiryDate, cardType and panLast4Digits 
+                // in order to pay with the token in the future.
             }
     });
 ```
@@ -439,11 +448,13 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
                 }
                 else {
                  // OTP not required.
-                 // Handle and notify user of successful validation. A token for the card details is returned in the response.
+                 // Handle and notify user of successful validation. 
+                 // A token for the card details is returned in the response.
                 }
                 // The response object contains fields transactionIdentifier, message,token
                 // tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType. 
-                //Save the token, tokenExpiryDate, cardType and panLast4Digits in order to pay with the token in the future.
+                // Save the token, tokenExpiryDate, cardType and panLast4Digits 
+                // in order to pay with the token in the future.
             }
     });
 ```
