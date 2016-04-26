@@ -434,8 +434,8 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
     Context context = this; // Reference to your Android Activity
 
-    new PaymentSDK(context, options).validateCard(request, new IswCallback<ValidateCardResponse>() { //Send payment
-
+    new PaymentSDK(context, options).validateCard(request, new IswCallback<ValidateCardResponse>() { 
+            //Send payment
             @Override
             public void onError(Exception error) {
                 // Handle error and notify the user.
@@ -500,9 +500,6 @@ To check the status of a payment made, use the code below
             }
     });
 ```
-
-
-
 
 
 ## <a name='BlackBerry'></a>Using Android SDK to Create Blackberry Application
