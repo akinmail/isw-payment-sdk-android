@@ -45,7 +45,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
     	    paymentApi : "https://sandbox.interswitchng.com",
     	    passportApi : "https://sandbox.interswitchng.com/passport"
     	}
-    	var initial = PaymentPlugin.init("Init",userDetails);				 
+    	var initial = PaymentPlugin.init(userDetails);				 
     	initial.done(function(response){    			
     	    alert(response); // success response if the initialization was successful
     	});
@@ -119,7 +119,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
 * Create a Pay button and set the payment request
 * Set up payment request like this: 
 ```javascript
-    var payRequest = {			
+    var payWithWalletRequest = {			
         amount : 100, // Amount in Naira
         customerId : 1234567890, // Optional email, mobile no, BVN etc to uniquely identify the customer.
         currency : "NGN", // ISO Currency code
