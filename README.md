@@ -429,20 +429,19 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     });
 ```
 
-### <a name='AuthorizeOTP'></a>Authorize Transaction With OTP
-## Authorize Transaction With OTP
+## <a name='AuthorizeOTP'></a>Authorize Transaction With OTP
 ```java    
     if (StringUtils.hasText(response.getOtpTransactionIdentifier())) { // 
-                AuthorizeOtpRequest otpRequest = new AuthorizeOtpRequest(); 
-                // Setup request parameters using the selected Payment Method
-                otpRequest.setOtp("123456"); // Accept OTP from user
-                // Set the OTP identifier for the request
-                otpRequest.setOtpTransactionIdentifier(response.getOtpTransactionIdentifier()); 
-                 // Set the unique transaction reference.
-                otpRequest.setTransactionRef(response.getTransactionRef());
-                //Authorize OTP Request
-                AuthorizeOtpResponse otpResponse = new PurchaseClient(options).authorizeOtp(otpRequest);  
-                //Handle and notify user of successful transaction               
+        AuthorizeOtpRequest otpRequest = new AuthorizeOtpRequest(); 
+        // Setup request parameters using the selected Payment Method
+        otpRequest.setOtp("123456"); // Accept OTP from user
+        // Set the OTP identifier for the request
+        otpRequest.setOtpTransactionIdentifier(response.getOtpTransactionIdentifier()); 
+         // Set the unique transaction reference.
+        otpRequest.setTransactionRef(response.getTransactionRef());
+        //Authorize OTP Request
+        AuthorizeOtpResponse otpResponse = new PurchaseClient(options).authorizeOtp(otpRequest);  
+        //Handle and notify user of successful transaction               
     }
 ```
  
