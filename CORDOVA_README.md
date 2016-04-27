@@ -211,19 +211,16 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```
 
 
-```javascript
-    progressDialog("Making Payment..."); // Display progress dialog
+```javascript    
     var payment = PaymentPlugin.makePayment(purchaseRequest);
-    payment.done(function(response){
-    cordova.plugin.pDialog.dismiss(); // Dismiss the progress dialog
+    payment.done(function(response){    
     var obj = JSON.parse(response);
         //the response object here contains amount, message, transactionIdentifier and transactionRef			
         console.log(response);
         alert(response);				
     });
     payment.fail(function (response) {			  
-        console.log(response);
-        cordova.plugin.pDialog.dismiss(); // Dismiss the progress dialog
+        console.log(response);        
         alert(response);				
     });
 ```
@@ -231,11 +228,9 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ### <a name='PayWithWalletNoUI'></a>Pay with Wallet
 * To allow for Payment with Wallet only
 * Create a UI to collect amount, CVV, expiry date and PIN and to display user's Payment Method(s). Use the code below to load the Payment Method(s)
-```javascript
-    progressDialog("Loading Wallet...");
+```javascript    
     var paymentItems=PaymentPlugin.loadWallet();
-    paymentItems.done(function(response){
-    cordova.plugin.pDialog.dismiss();
+    paymentItems.done(function(response){    
     alert("Wallet loaded successfully");
     var responseObject = JSON.parse(response); // The response object here contains cardProduct, and token    
         for(var i=0; i<response.length; i++){
@@ -244,8 +239,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
         } 
     });
     paymentItems.fail(function (response) {
-        console.log(response);
-        cordova.plugin.pDialog.dismiss();			
+        console.log(response);        			
         alert(response);				
     });
 ```
@@ -269,13 +263,11 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```javascript
     var payment = PaymentPlugin.payWithWalletSDK(walletRequest);				 
     payment.done(function(response){
-         console.log(response);
-         cordova.plugin.pDialog.dismiss();
+         console.log(response);         
          alert(response);
     });
     payment.fail(function (response) {
-        console.log(response);
-        cordova.plugin.pDialog.dismiss();
+        console.log(response);        
         alert(response);
     });
 ```
@@ -302,13 +294,11 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```javascript
     var validateCard = PaymentPlugin.validateCard(validateCardRequest);
     validateCard.done(function(response){								
-        console.log(response);
-        cordova.plugin.pDialog.dismiss();
+        console.log(response);        
         alert(response);			
     });
     validateCard.fail(function (response) {
-        console.log(response);				
-        cordova.plugin.pDialog.dismiss();
+        console.log(response);				        
         alert(response);
         // The response object contains fields transactionIdentifier, 
         // message,token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier
@@ -337,13 +327,11 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```javascript
     var status = PaymentPlugin.authorizeOtp(authorizeOtpRequest);				 
     status.done(function(response){
-        console.log(response);
-        cordova.plugin.pDialog.dismiss();				 
+        console.log(response);        			 
         alert(response);
     });
     status.fail(function (response) {
-        console.log(response);
-        cordova.plugin.pDialog.dismiss();
+        console.log(response);        
         alert(response);
     });
 ```
@@ -365,13 +353,11 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```javascript
     var paymentStatus = PaymentPlugin.paymentStatus(paymentStatusRequest);
     paymentStatus.done(function(response){
-         console.log(response);
-         cordova.plugin.pDialog.dismiss();
+         console.log(response);         
         alert(response);
     });
     paymentStatus.fail(function (response) {
-        console.log(response);
-        cordova.plugin.pDialog.dismiss();
+        console.log(response);        
         alert(response);
     });
 ```
