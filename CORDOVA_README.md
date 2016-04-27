@@ -28,7 +28,7 @@ The first step to ​using the plugin is to register as a merchant. This is desc
 ### <a name='CordovaProject'></a> Create a new Cordova Project using CLI (Command Line Interface)
 1. To create a new project in cordova refer to the documentation [here](https://cordova.apache.org/docs/en/latest/guide/cli/index.html)
 2. Add the cordova-payment-plugin from CLI, using this command **cordova plugin add path/to/cordova-payment-plugin**
-3. include the *index.js* file on your *index.html* page
+**Please Note: *Ensure your cordova.js file is the first js file in your index.html***
 
 
 ### <a name='SandBoxMode'></a> Using The SDK in Sandbox Mode
@@ -144,7 +144,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
 * Set up payment request like this: 
 ```javascript
     var validateCardRequest = {
-        customerId : 1234567890
+        customerId : 1234567890 // Optional email, mobile no, BVN etc to uniquely identify the customer
     }
 ```
 * To call validate card, use this code.
@@ -173,7 +173,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
         cardtype : "Verve", // Card Type	
         expiryDate : 2004, // Card or Token expiry date in YYMM format
         customerId : 1234567890,	// Optional email, mobile no, BVN etc to uniquely identify the customer.	
-        panLast4Digits : 7499,		
+        panLast4Digits : 7499,		//Last 4digit of the pan card
         description : "Pay for gown"
     }
 ```
