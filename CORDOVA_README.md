@@ -31,7 +31,7 @@ The first step to ​using the plugin is to register as a merchant. This is desc
 **Please Note: *Ensure your cordova.js file is the first js file in your index.html***
 
 
-### <a name='SandBoxMode'></a> Using The SDK in Sandbox Mode
+### <a name='SandBoxMode'></a> Using The Plugin in Sandbox Mode
 
 During development of your app, you should use the SDK in sandbox mode to enable testing. Different Client Id and Client Secret are provided for Production and Sandbox mode. The procedure to use the SDK on sandbox mode is just as easy:
 
