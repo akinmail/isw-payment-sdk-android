@@ -317,10 +317,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```javascript
     var status = PaymentPlugin.authorizeOtp(authorizeOtpRequest);				 
     status.done(function(response){
-        console.log(response);     // transaction success reponse    			         
+         alert(response);  // transaction success reponse    			         
     });
     status.fail(function (response) {
-        console.log(response);  // transaction failure reponse        
+         alert(response);  // transaction failure reponse        
     });
 ```
 
