@@ -105,11 +105,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```javascript
     var payWithCard = PaymentPlugin.payWithCard(payRequest);
     payWithCard.done(function(response){
-        alert(response);
+        alert(response); // transaction success reponse
     });
-    payWithCard.fail(function (response) {
-        console.log(response);
-        alert(response);
+    payWithCard.fail(function (response) {        
+        alert(response); // transaction failure reponse
     });
 ```
 
@@ -130,11 +129,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```javascript
     var payWithWallet = PaymentPlugin.payWithWallet(payWithWalletRequest);				 
     payWithWallet.done(function(response){				 
-        alert(response);
+        alert(response); // transaction success reponse
     });
-    payWithWallet.fail(function (response) {
-        console.log(response);				
-        alert(response);
+    payWithWallet.fail(function (response) {        			
+        alert(response); // transaction failure reponse
     });
 ```
 
@@ -150,13 +148,11 @@ During development of your app, you should use the SDK in sandbox mode to enable
 * To call validate card, use this code.
 ```javascript
     var validateCard = PaymentPlugin.validatePaymentCard(validateCardRequest);
-    validateCard.done(function(response){
-         console.log(response);
-        alert(response);
+    validateCard.done(function(response){         
+        alert(response); // transaction success reponse
     });
-    validateCard.fail(function (response) {
-        console.log(response);
-        alert(response);
+    validateCard.fail(function (response) {        
+        alert(response); // transaction failure reponse
     });
 ```
 
@@ -181,11 +177,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```javascript
     var payment =PaymentPlugin.payWithToken(payWithTokenRequest);	
 	payment.done(function(response){
-		alert(response);
+		alert(response); // transaction success reponse
 	});
-	payment.fail(function (response) {
-		console.log(response);
-		alert(response);
+	payment.fail(function (response) {		
+		alert(response); // transaction failure reponse
 	});
 ```
 
@@ -215,13 +210,11 @@ During development of your app, you should use the SDK in sandbox mode to enable
     var payment = PaymentPlugin.makePayment(purchaseRequest);
     payment.done(function(response){    
     var obj = JSON.parse(response);
-        //the response object here contains amount, message, transactionIdentifier and transactionRef			
-        console.log(response);
+        //the response object here contains amount, message, transactionIdentifier and transactionRef			        
         alert(response);				
     });
-    payment.fail(function (response) {			  
-        console.log(response);        
-        alert(response);				
+    payment.fail(function (response) {			              
+        alert(response); // transaction failure reponse
     });
 ```
 
@@ -232,15 +225,16 @@ During development of your app, you should use the SDK in sandbox mode to enable
     var paymentItems=PaymentPlugin.loadWallet();
     paymentItems.done(function(response){    
     alert("Wallet loaded successfully");
-    var responseObject = JSON.parse(response); // The response object here contains cardProduct, and token    
+    var responseObject = JSON.parse(response); 
+    // The response object here contains cardProduct, panLast4Digits and token    
         for(var i=0; i<response.length; i++){
             console.log(responseObject.paymentMethods[i].token);
-            console.log(responseObject.paymentMethods[i].cardProduct);           
+            console.log(responseObject.paymentMethods[i].panLast4Digits);
+            console.log(responseObject.paymentMethods[i].cardProduct);
         } 
     });
-    paymentItems.fail(function (response) {
-        console.log(response);        			
-        alert(response);				
+    paymentItems.fail(function (response) {           			
+        alert(response);	// transaction failure reponse	
     });
 ```
 
@@ -262,13 +256,11 @@ During development of your app, you should use the SDK in sandbox mode to enable
 * In the onclick event of the Pay button, use this code.
 ```javascript
     var payment = PaymentPlugin.payWithWalletSDK(walletRequest);				 
-    payment.done(function(response){
-         console.log(response);         
-         alert(response);
+    payment.done(function(response){                 
+         alert(response);  // transaction success reponse
     });
-    payment.fail(function (response) {
-        console.log(response);        
-        alert(response);
+    payment.fail(function (response) {               
+        alert(response);   // transaction failure reponse
     });
 ```
 
@@ -293,12 +285,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
 
 ```javascript
     var validateCard = PaymentPlugin.validateCard(validateCardRequest);
-    validateCard.done(function(response){								
-        console.log(response);        
-        alert(response);			
+    validateCard.done(function(response){								              
+        alert(response);  // transaction failure reponse
     });
-    validateCard.fail(function (response) {
-        console.log(response);				        
+    validateCard.fail(function (response) {        			        
         alert(response);
         // The response object contains fields transactionIdentifier, 
         // message,token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier
@@ -327,12 +317,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
 ```javascript
     var status = PaymentPlugin.authorizeOtp(authorizeOtpRequest);				 
     status.done(function(response){
-        console.log(response);        			 
-        alert(response);
+        console.log(response);     // transaction success reponse    			         
     });
     status.fail(function (response) {
-        console.log(response);        
-        alert(response);
+        console.log(response);  // transaction failure reponse        
     });
 ```
 
@@ -352,12 +340,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
 * To check the status of a payment made, use the code below
 ```javascript
     var paymentStatus = PaymentPlugin.paymentStatus(paymentStatusRequest);
-    paymentStatus.done(function(response){
-         console.log(response);         
-        alert(response);
+    paymentStatus.done(function(response){                  
+        alert(response); // transaction failure reponse
     });
-    paymentStatus.fail(function (response) {
-        console.log(response);        
-        alert(response);
+    paymentStatus.fail(function (response) {              
+        alert(response);  // transaction failure reponse
     });
 ```
