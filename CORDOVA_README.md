@@ -61,7 +61,7 @@ During development of your app, you should use the Plugin in sandbox mode to ena
 
 ## <a name='SDKWithUI'></a>Using the Plugin with UI (In PCI-DSS Scope: No )
 
-*NOTE: To use the inapp change your manifest theme to android:theme="@style/Theme.AppCompat.Light"
+**NOTE: *To use the inapp change your manifest theme to android:theme="@style/Theme.AppCompat.Light"***
 
 ### <a name='Pay'>Pay with Card/Wallet
 
