@@ -226,7 +226,8 @@ During development of your app, you should use the Plugin in sandbox mode to ena
     paymentItems.done(function(response){    
     alert("Wallet loaded successfully");
     var responseObject = JSON.parse(response); 
-    // The response object here contains cardProduct, panLast4Digits and token    
+    // The response object here contains cardProduct, panLast4Digits and token, the token is used for making payment
+    // Load the cardProduct on a dropdown list and use the token in making payment with wallet 
         for(var i=0; i<response.length; i++){
             console.log(responseObject.paymentMethods[i].token);
             console.log(responseObject.paymentMethods[i].panLast4Digits);
@@ -243,7 +244,7 @@ During development of your app, you should use the Plugin in sandbox mode to ena
 
 ```javascript
     var walletRequest = {
-        pan:5060990580000217499,  //Token from the wallet
+        pan:ADA4C1FFE6DE40C584ABD3CBAFDA0D08,  //Token from the wallet
         amount : 100, // Amount in Naira
         cvv : 111, // Card CVV
         pin : 1111, // Optional Card PIN for card payment
