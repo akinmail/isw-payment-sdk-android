@@ -94,7 +94,7 @@ During development of your app, you should use the Plugin in sandbox mode to ena
 * Create a Pay button and set the payment request
 *Set up payment request like this: 
 ```javascript
-    var payRequest = {			
+    var payWithCardRequest = {			
         amount : 100, // Amount in Naira
         customerId : 1234567890, // Optional email, mobile no, BVN etc to uniquely identify the customer.
         currency : "NGN", // ISO Currency code
@@ -103,7 +103,7 @@ During development of your app, you should use the Plugin in sandbox mode to ena
 ```
 * In the onclick event of the Pay button, use this code.
 ```javascript
-    var payWithCard = PaymentPlugin.payWithCard(payRequest);
+    var payWithCard = PaymentPlugin.payWithCard(payWithCardRequest);
     payWithCard.done(function(response){
         alert(response); // transaction success reponse
     });
@@ -163,7 +163,7 @@ During development of your app, you should use the Plugin in sandbox mode to ena
 * Set up payment request like this: 
 ```javascript
     var payWithTokenRequest = {
-        pan : 5060990580000217499, //Token
+        pan : 5123459987670669364, //Token
         amount : 100, // Amount in Naira
         currency : "NGN", // ISO Currency code		
         cardtype : "Verve", // Card Type	
