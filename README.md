@@ -83,8 +83,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```java
-    RequestOptions options = RequestOptions.builder().setClientId("IKIA335B188FDC3527EDB1E9300D35F6C51826DFC8A5")
-    .setClientSecret("4HOFYiMJitFQeHYUCH/pvTF6jpiIaZqzVKB/pheK4Cs=").build();
+    RequestOptions options = RequestOptions.builder()
+    .setClientId("IKIA335B188FDC3527EDB1E9300D35F6C51826DFC8A5")
+    .setClientSecret("4HOFYiMJitFQeHYUCH/pvTF6jpiIaZqzVKB/pheK4Cs=")
+    .build();
     Pay pay = new Pay(activity, customerId, paymentDescription, amount, currency, options, 
     new IswCallback<PurchaseResponse>()  {
         @Override
@@ -116,8 +118,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```java
-    RequestOptions options = RequestOptions.builder().setClientId("IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276")
-    .setClientSecret("Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=").build();
+    RequestOptions options = RequestOptions.builder()
+    .setClientId("IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276")
+    .setClientSecret("Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=")
+    .build();
     PayWithCard payWithCard = new PayWithCard(activity, customerId, paymentDescription, amount, 
     currency, options, new IswCallback<PurchaseResponse>() {
     
@@ -151,8 +155,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```java
-    RequestOptions options = RequestOptions.builder().setClientId("IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276")
-    .setClientSecret("Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=").build();
+    RequestOptions options = RequestOptions.builder()
+    .setClientId("IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276")
+    .setClientSecret("Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=")
+    .build();
     PayWithWallet payWithWallet = new PayWithWallet(activity, customerId, paymentDescription, amount, 
     currency, options, new IswCallback<PurchaseResponse>() {
         @Override
@@ -183,8 +189,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```java
-    RequestOptions options = RequestOptions.builder().setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54")
-    .setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=").build();
+    RequestOptions options = RequestOptions.builder()
+    .setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54")
+    .setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=")
+    .build();
     ValidateCard validateCard = new ValidateCard(activity, customerId, options, 
     new IswCallback<ValidateCardResponse>() {
     
@@ -217,8 +225,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
   Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```java
-    RequestOptions options = RequestOptions.builder().setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54")
-    .setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=").build();
+    RequestOptions options = RequestOptions.builder()
+    .setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54")
+    .setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=")
+    .build();
     PayWithToken payWithToken = new PayWithToken(activity, customerId, amount, token, expiryDate, currency, 
     cardType panLast4Digits, paymentDescription, options, new IswCallback<PurchaseResponse>() {
     
@@ -256,8 +266,10 @@ During development of your app, you should use the SDK in sandbox mode to enable
 Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```java
-    RequestOptions options = RequestOptions.builder().setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E")
-    .setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=").build();
+    RequestOptions options = RequestOptions.builder()
+    .setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E")
+    .setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
+    .build();
     PurchaseRequest request = new PurchaseRequest(); // Setup request parameters
     request.setCustomerId("1234567890"); // Optional email, mobile no, BVN etc to uniquely identify the customer.
     request.setAmount("100"); // Amount in Naira
@@ -306,8 +318,10 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```java
-    RequestOptions options = RequestOptions.builder().setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E")
-    .setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=").build();
+    RequestOptions options = RequestOptions.builder()
+    .setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E")
+    .setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
+    .build();
     //Load Wallet
     final WalletRequest request = new WalletRequest();
     request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference
@@ -372,8 +386,10 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
 ```java
-    RequestOptions options = RequestOptions.builder().setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E")
-    .setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=").build();
+    RequestOptions options = RequestOptions.builder()
+    .setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E")
+    .setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=")
+    .build();
     ValidateCardRequest request = new ValidateCardRequest(); // Setup request parameters
     request.setCustomerId("1234567890"); // Optional email, mobile no, BVN etc to uniquely identify the customer.
     request.setPan("5060100000000000012"); //Card No or Token
@@ -413,71 +429,19 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     });
 ```
 
-### <a name='AuthorizeOTP'></a>Authorize Transaction With OTP
-### Validate Card and Get Token
-
-* To check if a card is valid and get a token
-* Create a UI to collect card details
-* Create a Validate/Add Card button
-* In the onClick listener of the Validate/Add Card button, use this code.
-
-Note: Supply your Client Id and Client Secret you got after registering as a Merchant
-
-```java
-    RequestOptions options = RequestOptions.builder().setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E")
-    .setClientSecret("SagfgnYsmvAdmFuR24sKzMg7HWPmeh67phDNIiZxpIY=").build();
-    ValidateCardRequest request = new ValidateCardRequest(); // Setup request parameters
-    // Optional email, mobile no, BVN etc to uniquely identify the customer.
-    request.setCustomerId("1234567890"); 
-    request.setPan("5060100000000000012"); //Card No or Token
-    request.setPinData("1111"); // Optional Card PIN for card payment
-    request.setExpiryDate("2004"); // Card or Token expiry date in YYMM format
-    request.setCvv2("111");
-    request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
-    Context context = this; // Reference to your Android Activity
-
-    new PaymentSDK(context, options).validateCard(request, new IswCallback<ValidateCardResponse>() { 
-            //Send payment
-            @Override
-            public void onError(Exception error) {
-                // Handle error and notify the user.
-                // Payment not successful.
-            }
-
-            @Override
-            public void onSuccess(ValidateCardResponse response) {
-                // Check if OTP is required.
-                if (StringUtils.hasText(response.getOtpTransactionIdentifier())) {
-                   // OTP required.
-                   // Ask user for OTP and authorize transaction using the otpTransactionIdentifier.
-                   // See how to authorize transaction with OTP below.
-                }
-                else {
-                 // OTP not required.
-                 // Handle and notify user of successful validation. 
-                 // A token for the card details is returned in the response.
-                }
-                // The response object contains fields transactionIdentifier, message,token
-                // tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, transactionRef and cardType. 
-                // Save the token, tokenExpiryDate, cardType and panLast4Digits 
-                // in order to pay with the token in the future.
-            }
-    });
-```
-
-### Authorize Transaction With OTP
+## <a name='AuthorizeOTP'></a>Authorize Transaction With OTP
 ```java    
     if (StringUtils.hasText(response.getOtpTransactionIdentifier())) { // 
-                AuthorizeOtpRequest otpRequest = new AuthorizeOtpRequest(); 
-                // Setup request parameters using the selected Payment Method
-                otpRequest.setOtp("123456"); // Accept OTP from user
-                // Set the OTP identifier for the request
-                otpRequest.setOtpTransactionIdentifier(response.getOtpTransactionIdentifier()); 
-                 // Set the unique transaction reference.
-                otpRequest.setTransactionRef(response.getTransactionRef());
-                //Authorize OTP Request
-                AuthorizeOtpResponse otpResponse = new PurchaseClient(options).authorizeOtp(otpRequest);  
-                //Handle and notify user of successful transaction               
+        AuthorizeOtpRequest otpRequest = new AuthorizeOtpRequest(); 
+        // Setup request parameters using the selected Payment Method
+        otpRequest.setOtp("123456"); // Accept OTP from user
+        // Set the OTP identifier for the request
+        otpRequest.setOtpTransactionIdentifier(response.getOtpTransactionIdentifier()); 
+         // Set the unique transaction reference.
+        otpRequest.setTransactionRef(response.getTransactionRef());
+        //Authorize OTP Request
+        AuthorizeOtpResponse otpResponse = new PurchaseClient(options).authorizeOtp(otpRequest);  
+        //Handle and notify user of successful transaction               
     }
 ```
  
