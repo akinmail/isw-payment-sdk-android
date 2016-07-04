@@ -15,9 +15,9 @@
    * [Pay with Card/Token](#PayWithCardToken)
    * [Pay with Wallet](#PayWithWalletNoUI)
    * [Validate Card and Get Token](#ValidateCardNoUI)
-   * [Authorize Card Purchase With OTP](#AuthorizeOTP)  
-   * [Validate Card With OTP] (#ValidateCardOTP)
-   * [Authorize Wallet Purchase With OTP](#AuthorizeWOTP)
+   * [Authorize PayWithCard using OTP](#AuthorizeOTP)  
+   * [Authorize Card Validation using OTP] (#ValidateCardOTP)
+   * [Authorize PayWithWallet using OTP](#AuthorizeWOTP)
    * [Checking Payment Status](#PaymentStatus)
 3. [Using Android SDK to Create Blackberry Application](#BlackBerry)
    
@@ -399,7 +399,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     request.setPan("5060100000000000012"); //Card No or Token
     request.setPinData("1111"); // Optional Card PIN for card payment
     request.setExpiryDate("2004"); // Card or Token expiry date in YYMM format
-    request.setCvv2("111");
+    request.setCvv2("111"); // Card Verification Value
     request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
     Context context = this; // Reference to your Android Activity.
     new PaymentSDK(context, options).validateCard(request, new IswCallback<ValidateCardResponse>() { 
@@ -437,7 +437,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     });
 ```
 
-## <a name='AuthorizeOTP'></a>Authorize Card Purchase With OTP
+## <a name='AuthorizeOTP'></a>Authorize PayWithCard using OTP
 ```java 
 if (StringUtils.hasText(response.getResponseCode())) { // 
     if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
@@ -493,7 +493,7 @@ if (StringUtils.hasText(response.getResponseCode())) { //
    
 ```
 
-## <a name='ValidateCardOTP'></a>Validate Card With OTP
+## <a name='ValidateCardOTP'></a>Authorize Card Validation using OTP
 ```java 
 if (StringUtils.hasText(response.getResponseCode())) { // 
     if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
@@ -550,7 +550,7 @@ if (StringUtils.hasText(response.getResponseCode())) { //
 ```
 
  
-## <a name='AuthorizeWOTP'></a>Authorize Wallet Purchase With OTP
+## <a name='AuthorizeWOTP'></a>Authorize PayWithWallet using OTP
 
 ```java
 	if (StringUtils.hasText(response.getOtpTransactionIdentifier())) { // 
