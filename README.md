@@ -414,11 +414,11 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
                 if (StringUtils.hasText(response.getResponseCode())) {                
                    if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
                         // OTP required, ask user for OTP and authorize transaction
-                        // See how to authorize transaction with OTP below.
+                        // See how to authorize transaction with [OTP](#AuthorizeOTP) below.
                    }
                    else if (PaymentSDK.CARDINAL_RESPONSE_CODE.equals(response.getResponseCode())) {
                         // redirect user to cardinal authorization page
-                        // See how to authorize transaction with Cardinal below.
+                        // See how to authorize transaction with [Cardinal](#AuthorizeOTP) below.
                    }                   
                 }
                 else {
