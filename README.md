@@ -442,7 +442,8 @@ if (StringUtils.hasText(response.getResponseCode())) { //
         request.setPaymentId(response.getPaymentId()); // Set the payment identifier for the request
         request.setAuthData(request.getAuthData()); // Set the request Auth Data
         request.setOtp("123456"); // Accept OTP from user
-         new PaymentSDK(context, options).authorizePurchase(request, new IswCallback<AuthorizePurchaseResponse>() {
+         new PaymentSDK(context, options)
+         .authorizePurchase(request, new IswCallback<AuthorizePurchaseResponse>() {
             @Override
             public void onError(Exception error) {
                 // Handle and notify user of error
