@@ -410,15 +410,20 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
             @Override
             public void onSuccess(ValidateCardResponse response) {
                 // Check if OTP is required.
-                if (StringUtils.hasText(response.getOtpTransactionIdentifier())) {
-                   // OTP required.
-                   // Ask user for OTP and authorize transaction using the otpTransactionIdentifier.
-                   // See how to authorize transaction with OTP below.
+                if (StringUtils.hasText(response.getResponseCode())) {                
+                   if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
+                        // OTP required, ask user for OTP and authorize transaction
+                        // See how to authorize transaction with OTP below.
+                   }
+                   else if (PaymentSDK.CARDINAL_RESPONSE_CODE.equals(response.getResponseCode())) {
+                        // redirect user to cardinal authorization page
+                        // See how to authorize transaction with Cardinal below.
+                   }                   
                 }
                 else {
-                 // OTP not required.
-                 // Handle and notify user of successful validation. 
-                 // A token for the card details is returned in the response.
+                     // OTP not required.
+                     // Handle and notify user of successful transaction. 
+                     // A token for the card details is returned in the response.
                 }
                 // The response object contains fields transactionIdentifier, 
                 // message,token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier
@@ -431,55 +436,56 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 
 ## <a name='AuthorizeOTP'></a>Authorize Purchase With OTP
 ```java 
-    if (StringUtils.hasText(response.getResponseCode())) { // 
-        if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
-            AuthorizePurchaseRequest request = new AuthorizePurchaseRequest();
-            request.setPaymentId(response.getPaymentId()); // Set the payment identifier for the request
-            request.setAuthData(request.getAuthData()); // Set the request Auth Data
-            request.setOtp("123456"); // Accept OTP from user
-             new PaymentSDK(context, options).authorizePurchase(request, new IswCallback<AuthorizePurchaseResponse>() {
-                @Override
-                public void onError(Exception error) {
-                    // Handle and notify user of error
-                }
-                @Override
-                public void onSuccess(AuthorizePurchaseResponse otpResponse) {
-                     //Handle and notify user of successful transaction
-                }
-            });
-        }
-        if (PaymentSDK.CARDINAL_RESPONSE_CODE.equals(response.getResponseCode())) {
-            // Create WebView to process the Authorize purchase request
-            webView = new AuthorizeWebView(context, response) {
-                @Override
-                public void onPageDone() {                    
-                    AuthorizePurchaseRequest request = new AuthorizePurchaseRequest();
-                    request.setAuthData(request.getAuthData()); // Set the request Auth Data.
-                    request.setPaymentId(response.getPaymentId()); // Set the payment identifier for the request.
-                    request.setTransactionId(response.getTransactionId()); // Set the payment identifier for the request.
-                    request.setEciFlag(response.getEciFlag());   // Set the Electronic Commerce Indicator (ECI).
-                    new PaymentSDK(context, options).authorizePurchase(request, new IswCallback<AuthorizePurchaseResponse>() {
-                        @Override
-                        public void onError(Exception error) {
-                            // Handle and notify user of error
-                        }
-                        @Override
-                        public void onSuccess(AuthorizePurchaseResponse response) {
-                            //Handle and notify user of successful transaction
-                        }
-                    });
-                }
-                @Override
-                public void onPageError(Exception error) {
-                    // Handle and notify user of error
-                }
-            };
-            // Other webview customizations goes here e.g.
-            webView.requestFocus(View.FOCUS_DOWN);
-            webView.getSettings().setJavaScriptEnabled(true);
-            webView.setVerticalScrollBarEnabled(true);
-        }
+if (StringUtils.hasText(response.getResponseCode())) { // 
+    if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
+        AuthorizePurchaseRequest request = new AuthorizePurchaseRequest();
+        request.setPaymentId(response.getPaymentId()); // Set the payment identifier for the request
+        request.setAuthData(request.getAuthData()); // Set the request Auth Data
+        request.setOtp("123456"); // Accept OTP from user
+         new PaymentSDK(context, options).authorizePurchase(request, new IswCallback<AuthorizePurchaseResponse>() {
+            @Override
+            public void onError(Exception error) {
+                // Handle and notify user of error
+            }
+            @Override
+            public void onSuccess(AuthorizePurchaseResponse otpResponse) {
+                 //Handle and notify user of successful transaction
+            }
+        });
     }
+    if (PaymentSDK.CARDINAL_RESPONSE_CODE.equals(response.getResponseCode())) {
+        // Create WebView to process the Authorize purchase request
+        webView = new AuthorizeWebView(context, response) {
+            @Override
+            public void onPageDone() {                    
+                AuthorizePurchaseRequest request = new AuthorizePurchaseRequest();
+                request.setAuthData(request.getAuthData()); // Set the request Auth Data.
+                request.setPaymentId(response.getPaymentId()); // Set the payment identifier for the request.
+                request.setTransactionId(response.getTransactionId()); // Set the payment identifier for the request.
+                request.setEciFlag(response.getEciFlag());   // Set the Electronic Commerce Indicator (ECI).
+                new PaymentSDK(context, options)
+                .authorizePurchase(request, new IswCallback<AuthorizePurchaseResponse>() {
+                    @Override
+                    public void onError(Exception error) {
+                        // Handle and notify user of error
+                    }
+                    @Override
+                    public void onSuccess(AuthorizePurchaseResponse response) {
+                        //Handle and notify user of successful transaction
+                    }
+                });
+            }
+            @Override
+            public void onPageError(Exception error) {
+                // Handle and notify user of error
+            }
+        };
+        // Other webview customizations goes here e.g.
+        webView.requestFocus(View.FOCUS_DOWN);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setVerticalScrollBarEnabled(true);
+    }
+}
    
 ```
  
