@@ -96,7 +96,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
             // Handle error.
             // Payment not successful.
         }
-    
+
         @Override
         public void onSuccess(PurchaseResponse response) {
         /* Handle success.
@@ -194,17 +194,17 @@ During development of your app, you should use the SDK in sandbox mode to enable
     .setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=")
     .build();
     ValidateCard validateCard = new ValidateCard(activity, customerId, options, 
-    new IswCallback<AuthorizeCardResponse>() {
+    new IswCallback<ValidateCardResponse>() {
         @Override
         public void onError(Exception error) {
             // Handle error.
             // Card validation not successful
         }
         @Override
-        public void onSuccess(final AuthorizeCardResponse response) {
+        public void onSuccess(final ValidateCardResponse response) {
             /* Handle success.
                Card validation successful. The response object contains fields token, tokenExpiryDate
-                panLast4Digits, transactionRef and cardType. Save the token, tokenExpiryDate, cardType 
+                panLast4Digits, transactionRef, balance and cardType. Save the token, tokenExpiryDate, cardType 
                 and panLast4Digits in order to pay with the token in the future.
             */
         }
@@ -373,7 +373,8 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
                 if (StringUtils.hasText(response.getOtpTransactionIdentifier())) {
                     //OTP required
                     //Ask user for OTP and authorize transaction using the otp Transaction Identifier
-                } else { //OTP not required
+                } else { 
+                    //OTP not required
                    //Handle and notify user of successful transaction
                 }
             }
@@ -400,8 +401,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     request.setExpiryDate("2004"); // Card or Token expiry date in YYMM format
     request.setCvv2("111");
     request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
-    Context context = this; // Reference to your Android Activity
-
+    Context context = this; // Reference to your Android Activity.
     new PaymentSDK(context, options).validateCard(request, new IswCallback<ValidateCardResponse>() { 
             //Send payment
             @Override
