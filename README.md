@@ -461,7 +461,7 @@ if (StringUtils.hasText(response.getResponseCode())) { //
                 AuthorizePurchaseRequest request = new AuthorizePurchaseRequest();
                 request.setAuthData(request.getAuthData()); // Set the request Auth Data.
                 request.setPaymentId(response.getPaymentId()); // Set the payment identifier for the request.
-                request.setTransactionId(response.getTransactionId()); // Set the payment identifier for the request.
+                request.setTransactionId(response.getTransactionId()); // Set payment identifier for the request.
                 request.setEciFlag(response.getEciFlag());   // Set the Electronic Commerce Indicator (ECI).
                 new PaymentSDK(context, options)
                 .authorizePurchase(request, new IswCallback<AuthorizePurchaseResponse>() {
