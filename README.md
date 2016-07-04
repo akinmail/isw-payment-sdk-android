@@ -15,7 +15,8 @@
    * [Pay with Card/Token](#PayWithCardToken)
    * [Pay with Wallet](#PayWithWalletNoUI)
    * [Validate Card and Get Token](#ValidateCardNoUI)
-   * [Authorize Transaction With OTP](#AuthorizeOTP)
+   * [Authorize Card Purchase With OTP](#AuthorizeOTP)
+   * [Authorize Wallet Purchase With OTP](#AuthorizeWOTP)
    * [Checking Payment Status](#PaymentStatus)
 3. [Using Android SDK to Create Blackberry Application](#BlackBerry)
    
