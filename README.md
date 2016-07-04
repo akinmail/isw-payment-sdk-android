@@ -498,7 +498,7 @@ if (StringUtils.hasText(response.getResponseCode())) { //
 if (StringUtils.hasText(response.getResponseCode())) { // 
     if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
         AuthorizeCardRequest request = new AuthorizeCardRequest();
-        request.setPaymentId(response.getTransactionRef()); // Set the transaction reference for the request
+        request.setTransactionRef(response.getTransactionRef()); // Set the transaction reference for the request
         request.setAuthData(request.getAuthData()); // Set the request Auth Data
         request.setOtp("123456"); // Accept OTP from user
          new PaymentSDK(context, options)
