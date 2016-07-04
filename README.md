@@ -15,7 +15,8 @@
    * [Pay with Card/Token](#PayWithCardToken)
    * [Pay with Wallet](#PayWithWalletNoUI)
    * [Validate Card and Get Token](#ValidateCardNoUI)
-   * [Authorize Card Purchase With OTP](#AuthorizeOTP)
+   * [Authorize Card Purchase With OTP](#AuthorizeOTP)  
+   * [Validate Card With OTP] (#ValidateCardOTP)
    * [Authorize Wallet Purchase With OTP](#AuthorizeWOTP)
    * [Checking Payment Status](#PaymentStatus)
 3. [Using Android SDK to Create Blackberry Application](#BlackBerry)
@@ -378,6 +379,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
             }
     );
 ```
+
 ### <a name='ValidateCardNoUI'></a> Validate Card and Get Token
 * To check if a card is valid and get a token
 * Create a UI to collect card details
@@ -490,6 +492,63 @@ if (StringUtils.hasText(response.getResponseCode())) { //
 }
    
 ```
+
+## <a name='ValidateCardOTP'></a>Validate Card With OTP
+```java 
+if (StringUtils.hasText(response.getResponseCode())) { // 
+    if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
+        AuthorizeCardRequest request = new AuthorizeCardRequest();
+        request.setPaymentId(response.getTransactionRef()); // Set the transaction reference for the request
+        request.setAuthData(request.getAuthData()); // Set the request Auth Data
+        request.setOtp("123456"); // Accept OTP from user
+         new PaymentSDK(context, options)
+         .authorizeCard(request, new IswCallback<AuthorizeCardResponse>() {
+            @Override
+            public void onError(Exception error) {
+                // Handle and notify user of error
+            }
+            @Override
+            public void onSuccess(AuthorizeCardResponse authorizeCardResponse) {
+                 //Handle and notify user of successful transaction
+            }
+        });
+    }
+    if (PaymentSDK.CARDINAL_RESPONSE_CODE.equals(response.getResponseCode())) {
+        // Create WebView to process the Authorize purchase request
+        webView = new AuthorizeWebView(context, response) {
+            @Override
+            public void onPageDone() {                    
+                AuthorizeCardRequest request = new AuthorizeCardRequest();
+                request.setAuthData(request.getAuthData()); // Set the request Auth Data.
+                request.setPaymentId(response.getPaymentId()); // Set the payment identifier for the request.
+                request.setTransactionId(response.getTransactionId()); // Set payment identifier for the request.
+                request.setEciFlag(response.getEciFlag());   // Set the Electronic Commerce Indicator (ECI).
+                new PaymentSDK(context, options)
+                .authorizeCard(request, new IswCallback<AuthorizeCardResponse>() {
+                    @Override
+                    public void onError(Exception error) {
+                        // Handle and notify user of error
+                    }
+                    @Override
+                    public void onSuccess(AuthorizeCardResponse response) {
+                        //Handle and notify user of successful transaction
+                    }
+                });
+            }
+            @Override
+            public void onPageError(Exception error) {
+                // Handle and notify user of error
+            }
+        };
+        // Other webview customizations goes here e.g.
+        webView.requestFocus(View.FOCUS_DOWN);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setVerticalScrollBarEnabled(true);
+    }
+}
+   
+```
+
  
 ## <a name='AuthorizeWOTP'></a>Authorize Wallet Purchase With OTP
 
