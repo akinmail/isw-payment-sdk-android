@@ -15,7 +15,9 @@
    * [Pay with Card/Token](#PayWithCardToken)
    * [Pay with Wallet](#PayWithWalletNoUI)
    * [Validate Card and Get Token](#ValidateCardNoUI)
-   * [Authorize Transaction With OTP](#AuthorizeOTP)
+   * [Authorize PayWithCard using OTP](#AuthorizeOTP)  
+   * [Authorize Card Validation using OTP] (#ValidateCardOTP)
+   * [Authorize PayWithWallet using OTP](#AuthorizeWOTP)
    * [Checking Payment Status](#PaymentStatus)
 3. [Using Android SDK to Create Blackberry Application](#BlackBerry)
    
@@ -50,9 +52,16 @@ It consists of ​a library:
 5. Select the **deviceprint-release-2.2.0.aar** in libs folder
 6. To add the jar files, edit the build.gradle file of your app and add
 ```java
-    compile 'com.interswitchng:payment-android:0.0.12-Beta'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    repositories {
+        maven {
+            url  'http://dl.bintray.com/techquest/maven-repo'
+        }
+    }
+    dependencies{
+        compile 'com.interswitchng:payment-android:0.0.6'
+        compile 'com.android.support:appcompat-v7:23.1.1'
+        compile 'com.android.support:design:23.1.1'
+    }    
 ```
 7. Finally, rebuild the project
 
@@ -94,7 +103,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
             // Handle error.
             // Payment not successful.
         }
-    
+
         @Override
         public void onSuccess(PurchaseResponse response) {
         /* Handle success.
@@ -124,14 +133,12 @@ During development of your app, you should use the SDK in sandbox mode to enable
     .build();
     PayWithCard payWithCard = new PayWithCard(activity, customerId, paymentDescription, amount, 
     currency, options, new IswCallback<PurchaseResponse>() {
-    
         @Override
         public void onError(Exception error) {
             // Handle error.
             // Payment not successful.
-    
         }
-    
+        
         @Override
         public void onSuccess(final PurchaseResponse response) {
             /* Handle success
@@ -166,7 +173,7 @@ During development of your app, you should use the SDK in sandbox mode to enable
             // Handle error
             // Payment not successful.
         }
-    
+
         @Override
         public void onSuccess(PurchaseResponse response) {
             /* Handle success
@@ -195,19 +202,16 @@ During development of your app, you should use the SDK in sandbox mode to enable
     .build();
     ValidateCard validateCard = new ValidateCard(activity, customerId, options, 
     new IswCallback<ValidateCardResponse>() {
-    
         @Override
         public void onError(Exception error) {
             // Handle error.
             // Card validation not successful
-
         }
-    
         @Override
         public void onSuccess(final ValidateCardResponse response) {
             /* Handle success.
                Card validation successful. The response object contains fields token, tokenExpiryDate
-                panLast4Digits, transactionRef and cardType. Save the token, tokenExpiryDate, cardType 
+                panLast4Digits, transactionRef, balance and cardType. Save the token, tokenExpiryDate, cardType 
                 and panLast4Digits in order to pay with the token in the future.
             */
         }
@@ -231,7 +235,6 @@ During development of your app, you should use the SDK in sandbox mode to enable
     .build();
     PayWithToken payWithToken = new PayWithToken(activity, customerId, amount, token, expiryDate, currency, 
     cardType panLast4Digits, paymentDescription, options, new IswCallback<PurchaseResponse>() {
-    
         @Override
         public void onError(Exception error) {
             // Handle error
@@ -277,6 +280,7 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     request.setPan("5060100000000000012"); //Card No or Token
     request.setPinData("1111"); // Optional Card PIN for card payment
     request.setExpiryDate("2004"); // Card or Token expiry date in YYMM format
+    request.setRequestorId("11179920172"); // Requestor Identifier 
     request.setCvv2("111");
     request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
     Context context = this; // Reference to your Android Activity
@@ -292,15 +296,20 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
             @Override
             public void onSuccess(PurchaseResponse response) {
                 // Check if OTP is required.
-                if (StringUtils.hasText(response.getOtpTransactionIdentifier())) {
-                   // OTP required.
-                   // Ask user for OTP and authorize transaction using the otpTransactionIdentifier.
-                   // See how to authorize transaction with OTP below.
+                if (StringUtils.hasText(response.getResponseCode())) {                
+                   if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
+                        // OTP required, ask user for OTP and authorize transaction
+                        // See how to authorize transaction with OTP below.
+                   }
+                   else if (PaymentSDK.CARDINAL_RESPONSE_CODE.equals(response.getResponseCode())) {
+                        // redirect user to cardinal authorization page
+                        // See how to authorize transaction with Cardinal below.
+                   }                   
                 }
                 else {
-                 // OTP not required.
-                 // Handle and notify user of successful transaction. 
-                 // A token for the card details is returned in the response.
+                     // OTP not required.
+                     // Handle and notify user of successful transaction. 
+                     // A token for the card details is returned in the response.
                 }
                 // The response object contains fields transactionIdentifier, message, 
                 // amount, token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier, 
@@ -371,12 +380,14 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
                 if (StringUtils.hasText(response.getOtpTransactionIdentifier())) {
                     //OTP required
                     //Ask user for OTP and authorize transaction using the otp Transaction Identifier
-                } else { //OTP not required
+                } else { 
+                    //OTP not required
                    //Handle and notify user of successful transaction
                 }
             }
     );
 ```
+
 ### <a name='ValidateCardNoUI'></a> Validate Card and Get Token
 * To check if a card is valid and get a token
 * Create a UI to collect card details
@@ -395,10 +406,9 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     request.setPan("5060100000000000012"); //Card No or Token
     request.setPinData("1111"); // Optional Card PIN for card payment
     request.setExpiryDate("2004"); // Card or Token expiry date in YYMM format
-    request.setCvv2("111");
+    request.setCvv2("111"); // Card Verification Value
     request.setTransactionRef(RandomString.numeric(12)); // Generate a unique transaction reference.
-    Context context = this; // Reference to your Android Activity
-
+    Context context = this; // Reference to your Android Activity.
     new PaymentSDK(context, options).validateCard(request, new IswCallback<ValidateCardResponse>() { 
             //Send payment
             @Override
@@ -410,15 +420,20 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
             @Override
             public void onSuccess(ValidateCardResponse response) {
                 // Check if OTP is required.
-                if (StringUtils.hasText(response.getOtpTransactionIdentifier())) {
-                   // OTP required.
-                   // Ask user for OTP and authorize transaction using the otpTransactionIdentifier.
-                   // See how to authorize transaction with OTP below.
+                if (StringUtils.hasText(response.getResponseCode())) {                
+                   if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
+                        // OTP required, ask user for OTP and authorize transaction
+                        // See how to authorize transaction with OTP below.
+                   }
+                   else if (PaymentSDK.CARDINAL_RESPONSE_CODE.equals(response.getResponseCode())) {
+                        // redirect user to cardinal authorization page
+                        // See how to authorize transaction with Cardinal below.
+                   }                   
                 }
                 else {
-                 // OTP not required.
-                 // Handle and notify user of successful validation. 
-                 // A token for the card details is returned in the response.
+                     // OTP not required.
+                     // Handle and notify user of successful transaction. 
+                     // A token for the card details is returned in the response.
                 }
                 // The response object contains fields transactionIdentifier, 
                 // message,token, tokenExpiryDate, panLast4Digits, otpTransactionIdentifier
@@ -429,21 +444,136 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
     });
 ```
 
-## <a name='AuthorizeOTP'></a>Authorize Transaction With OTP
-```java    
-    if (StringUtils.hasText(response.getOtpTransactionIdentifier())) { // 
-        AuthorizeOtpRequest otpRequest = new AuthorizeOtpRequest(); 
-        // Setup request parameters using the selected Payment Method
-        otpRequest.setOtp("123456"); // Accept OTP from user
-        // Set the OTP identifier for the request
-        otpRequest.setOtpTransactionIdentifier(response.getOtpTransactionIdentifier()); 
-         // Set the unique transaction reference.
-        otpRequest.setTransactionRef(response.getTransactionRef());
-        //Authorize OTP Request
-        AuthorizeOtpResponse otpResponse = new PurchaseClient(options).authorizeOtp(otpRequest);  
-        //Handle and notify user of successful transaction               
+## <a name='AuthorizeOTP'></a>Authorize PayWithCard using OTP
+```java 
+if (StringUtils.hasText(response.getResponseCode())) { // 
+    if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
+        AuthorizePurchaseRequest request = new AuthorizePurchaseRequest();
+        request.setPaymentId(response.getPaymentId()); // Set the payment identifier for the request
+        request.setAuthData(request.getAuthData()); // Set the request Auth Data
+        request.setOtp("123456"); // Accept OTP from user
+         new PaymentSDK(context, options)
+         .authorizePurchase(request, new IswCallback<AuthorizePurchaseResponse>() {
+            @Override
+            public void onError(Exception error) {
+                // Handle and notify user of error
+            }
+            @Override
+            public void onSuccess(AuthorizePurchaseResponse otpResponse) {
+                 //Handle and notify user of successful transaction
+            }
+        });
+    }
+    if (PaymentSDK.CARDINAL_RESPONSE_CODE.equals(response.getResponseCode())) {
+        // Create WebView to process the Authorize purchase request
+        webView = new AuthorizeWebView(context, response) {
+            @Override
+            public void onPageDone() {                    
+                AuthorizePurchaseRequest request = new AuthorizePurchaseRequest();
+                request.setAuthData(request.getAuthData()); // Set the request Auth Data.
+                request.setPaymentId(response.getPaymentId()); // Set the payment identifier for the request.
+                request.setTransactionId(response.getTransactionId()); // Set payment identifier for the request.
+                request.setEciFlag(response.getEciFlag());   // Set the Electronic Commerce Indicator (ECI).
+                new PaymentSDK(context, options)
+                .authorizePurchase(request, new IswCallback<AuthorizePurchaseResponse>() {
+                    @Override
+                    public void onError(Exception error) {
+                        // Handle and notify user of error
+                    }
+                    @Override
+                    public void onSuccess(AuthorizePurchaseResponse response) {
+                        //Handle and notify user of successful transaction
+                    }
+                });
+            }
+            @Override
+            public void onPageError(Exception error) {
+                // Handle and notify user of error
+            }
+        };
+        // Other webview customizations goes here e.g.
+        webView.requestFocus(View.FOCUS_DOWN);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setVerticalScrollBarEnabled(true);
+    }
+}
+   
+```
+
+## <a name='ValidateCardOTP'></a>Authorize Card Validation using OTP
+```java 
+if (StringUtils.hasText(response.getResponseCode())) { // 
+    if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
+        AuthorizeCardRequest request = new AuthorizeCardRequest();
+        request.setTransactionRef(response.getTransactionRef()); // Set the transaction reference for the request
+        request.setAuthData(request.getAuthData()); // Set the request Auth Data
+        request.setOtp("123456"); // Accept OTP from user
+         new PaymentSDK(context, options)
+         .authorizeCard(request, new IswCallback<AuthorizeCardResponse>() {
+            @Override
+            public void onError(Exception error) {
+                // Handle and notify user of error
+            }
+            @Override
+            public void onSuccess(AuthorizeCardResponse authorizeCardResponse) {
+                 //Handle and notify user of successful transaction
+            }
+        });
+    }
+    if (PaymentSDK.CARDINAL_RESPONSE_CODE.equals(response.getResponseCode())) {
+        // Create WebView to process the Authorize purchase request
+        webView = new AuthorizeWebView(context, response) {
+            @Override
+            public void onPageDone() {                    
+                AuthorizeCardRequest request = new AuthorizeCardRequest();
+                request.setAuthData(request.getAuthData()); // Set the request Auth Data.
+                request.setPaymentId(response.getPaymentId()); // Set the payment identifier for the request.
+                request.setTransactionId(response.getTransactionId()); // Set payment identifier for the request.
+                request.setEciFlag(response.getEciFlag());   // Set the Electronic Commerce Indicator (ECI).
+                new PaymentSDK(context, options)
+                .authorizeCard(request, new IswCallback<AuthorizeCardResponse>() {
+                    @Override
+                    public void onError(Exception error) {
+                        // Handle and notify user of error
+                    }
+                    @Override
+                    public void onSuccess(AuthorizeCardResponse response) {
+                        //Handle and notify user of successful transaction
+                    }
+                });
+            }
+            @Override
+            public void onPageError(Exception error) {
+                // Handle and notify user of error
+            }
+        };
+        // Other webview customizations goes here e.g.
+        webView.requestFocus(View.FOCUS_DOWN);
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setVerticalScrollBarEnabled(true);
+    }
+}
+   
+```
+
+ 
+## <a name='AuthorizeWOTP'></a>Authorize PayWithWallet using OTP
+
+```java
+	if (StringUtils.hasText(response.getOtpTransactionIdentifier())) { // 
+            AuthorizeOtpRequest otpRequest = new AuthorizeOtpRequest(); 
+            // Setup request parameters using the selected Payment Method
+            otpRequest.setOtp("123456"); // Accept OTP from user
+            // Set the OTP identifier for the request
+            otpRequest.setOtpTransactionIdentifier(response.getOtpTransactionIdentifier()); 
+             // Set the unique transaction reference.
+            otpRequest.setTransactionRef(response.getTransactionRef());
+            //Authorize OTP Request
+            AuthorizeOtpResponse otpResponse = new PurchaseClient(options).authorizeOtp(otpRequest);  
+            //Handle and notify user of successful transaction               
     }
 ```
+
  
 ### <a name='PaymentStatus'></a>Checking Payment Status
 
