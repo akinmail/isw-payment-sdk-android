@@ -23,14 +23,14 @@ import com.interswitchng.sdk.payment.Payment;
 import com.interswitchng.sdk.payment.android.inapp.PayWithToken;
 import com.interswitchng.sdk.payment.android.inapp.ValidateCard;
 import com.interswitchng.sdk.payment.android.util.Util;
+import com.interswitchng.sdk.payment.model.AuthorizeCardResponse;
 import com.interswitchng.sdk.payment.model.Card;
 import com.interswitchng.sdk.payment.model.PurchaseResponse;
-import com.interswitchng.sdk.payment.model.ValidateCardResponse;
 
 import java.util.ArrayList;
 
 public class CardList extends AppCompatActivity {
-    private ArrayList<ValidateCardResponse> arrayList;
+    private ArrayList<AuthorizeCardResponse> arrayList;
     private ListView cardList;
     private Activity activity;
     private Context context;
@@ -41,9 +41,11 @@ public class CardList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_card_list);
         cardList = (ListView) findViewById(R.id.cardList);
-        arrayList = new ArrayList<ValidateCardResponse>();
+        arrayList = new ArrayList<>();
         activity = this;
         context = this;
+        Payment.overrideApiBase(Payment.QA_API_BASE); // used to override the payment api base url.
+        Passport.overrideApiBase(Passport.QA_API_BASE); //used to override the payment api base url.
         adapter = new AddCardAdapter(arrayList, getApplicationContext());
         cardList.setAdapter(adapter);
         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -99,21 +101,19 @@ public class CardList extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.addCard) {
-            Payment.overrideApiBase("https://qa.interswitchng.com"); // used to override the payment api base url.
-            Passport.overrideApiBase("https://qa.interswitchng.com/passport"); //used to override the payment api base url.
-            RequestOptions options = RequestOptions.builder().setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54").setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=").build();
-            final ValidateCard validateCard = new ValidateCard(activity, "1407002510", "NGN", options, new IswCallback<ValidateCardResponse>() {
+            RequestOptions options = RequestOptions.builder().setClientId("IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232").setClientSecret("ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=").build();
+            final ValidateCard validateCard = new ValidateCard(activity, "1407002510", options, new IswCallback<AuthorizeCardResponse>() {
 
                 @Override
                 public void onError(Exception error) {
-                    Util.notify(context, "Error", error.getMessage(), "Close", false);
+                    Util.notify(context, "Error", error.getLocalizedMessage(), "Close", false);
                 }
 
                 @Override
-                public void onSuccess(final ValidateCardResponse response) {
-                    String transactionIdentifier;
-                    transactionIdentifier = response.getTransactionIdentifier();
-                    Util.notify(getApplicationContext(), "Success", "Ref: " + transactionIdentifier, "Close", false);
+                public void onSuccess(final AuthorizeCardResponse response) {
+                    String transactionRef;
+                    transactionRef = response.getTransactionRef();
+                    Util.notify(context, "Success", "Ref: " + transactionRef, "Close", false);
                     if (!arrayList.contains(response)) {
                         arrayList.add(response);
                         adapter.notifyDataSetChanged();
@@ -127,12 +127,12 @@ public class CardList extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public final class AddCardAdapter extends ArrayAdapter<ValidateCardResponse> {
+    public final class AddCardAdapter extends ArrayAdapter<AuthorizeCardResponse> {
         private Context context;
-        private ArrayList<ValidateCardResponse> validateCardResponses;
+        private ArrayList<AuthorizeCardResponse> validateCardResponses;
         private Drawable mCurrentDrawable;
 
-        public AddCardAdapter(ArrayList<ValidateCardResponse> list, Context ctx) {
+        public AddCardAdapter(ArrayList<AuthorizeCardResponse> list, Context ctx) {
             super(ctx, R.layout.adapter_list, list);
             this.validateCardResponses = list;
             this.context = ctx;
@@ -148,18 +148,21 @@ public class CardList extends AppCompatActivity {
             }
             ImageView img = (ImageView) convertView.findViewById(R.id.cardType);
             TextView cardDescription = (TextView) convertView.findViewById(R.id.list_content);
-            ValidateCardResponse response = validateCardResponses.get(position);
+            AuthorizeCardResponse response = validateCardResponses.get(position);
             cardDescription.setText("PERSONAL ****" + response.getPanLast4Digits());
             if (response.getCardType().equalsIgnoreCase(Card.MASTERCARD)) {
                 mCurrentDrawable = context.getResources().getDrawable(R.mipmap.mastercard);
+                assert mCurrentDrawable != null;
                 mCurrentDrawable.setBounds(0, 0, 75, 60);
                 img.setImageDrawable(mCurrentDrawable);
             } else if (response.getCardType().equalsIgnoreCase(Card.VERVE)) {
                 mCurrentDrawable = context.getResources().getDrawable(R.mipmap.verve);
+                assert mCurrentDrawable != null;
                 mCurrentDrawable.setBounds(0, 0, 75, 60);
                 img.setImageDrawable(mCurrentDrawable);
             } else if (response.getCardType().equalsIgnoreCase(Card.VISA)) {
                 mCurrentDrawable = context.getResources().getDrawable(R.mipmap.visa);
+                assert mCurrentDrawable != null;
                 mCurrentDrawable.setBounds(0, 0, 75, 60);
                 img.setImageDrawable(mCurrentDrawable);
             }
@@ -187,10 +190,8 @@ public class CardList extends AppCompatActivity {
 
         @Override
         public boolean onActionItemClicked(android.view.ActionMode actionMode, MenuItem menuItem) {
-            Payment.overrideApiBase("https://qa.interswitchng.com"); // used to override the payment api base url.
-            Passport.overrideApiBase("https://qa.interswitchng.com/passport"); //used to override the payment api base url.
-            ValidateCardResponse response = arrayList.get(position);
-            RequestOptions options = RequestOptions.builder().setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54").setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=").build();
+            AuthorizeCardResponse response = arrayList.get(position);
+            RequestOptions options = RequestOptions.builder().setClientId("IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232").setClientSecret("ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=").build();
             String customerId = "1407002510";
             String amount = "200";
             String token = response.getToken();

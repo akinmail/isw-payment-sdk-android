@@ -1,10 +1,16 @@
 package com.interswitchng.sdk.payment.android.carddemo;
 
+import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Point;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.Display;
 import android.view.Menu;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.EditText;
 
@@ -12,11 +18,12 @@ import com.interswitchng.sdk.auth.Passport;
 import com.interswitchng.sdk.model.RequestOptions;
 import com.interswitchng.sdk.payment.IswCallback;
 import com.interswitchng.sdk.payment.Payment;
+import com.interswitchng.sdk.payment.android.AuthorizeWebView;
 import com.interswitchng.sdk.payment.android.PaymentSDK;
 import com.interswitchng.sdk.payment.android.util.Util;
 import com.interswitchng.sdk.payment.android.util.Validation;
-import com.interswitchng.sdk.payment.model.AuthorizeOtpRequest;
-import com.interswitchng.sdk.payment.model.AuthorizeOtpResponse;
+import com.interswitchng.sdk.payment.model.AuthorizePurchaseRequest;
+import com.interswitchng.sdk.payment.model.AuthorizePurchaseResponse;
 import com.interswitchng.sdk.payment.model.PurchaseRequest;
 import com.interswitchng.sdk.payment.model.PurchaseResponse;
 import com.interswitchng.sdk.util.RandomString;
@@ -32,13 +39,16 @@ public class SplashActivity extends AppCompatActivity implements Util.PromptResp
     private EditText pan;
     private EditText pin;
     private EditText expiry;
-
+    private EditText cvv2;
     private Context context;
 
     private Button payNow;
-    private String otpTransactionIdentifier;
+    private String paymentId;
     private String transactionIdentifier;
-    private RequestOptions options = RequestOptions.builder().setClientId("IKIA14BAEA0842CE16CA7F9FED619D3ED62A54239276").setClientSecret("Z3HnVfCEadBLZ8SYuFvIQG52E472V3BQLh4XDKmgM2A=").build();
+    private String authData;
+    private WebView webView;
+
+    private RequestOptions options = RequestOptions.builder().setClientId("IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232").setClientSecret("ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=").build();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,7 +64,7 @@ public class SplashActivity extends AppCompatActivity implements Util.PromptResp
         pan = (EditText) findViewById(R.id.cardpan);
         pin = (EditText) findViewById(R.id.cardpin);
         expiry = (EditText) findViewById(R.id.expirydate);
-
+        cvv2 = (EditText) findViewById(R.id.cardCvv2);
         payNow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -69,8 +79,8 @@ public class SplashActivity extends AppCompatActivity implements Util.PromptResp
     }
 
     public void executePay() {
-        Payment.overrideApiBase("https://qa.interswitchng.com"); // used to override the payment api base url.
-        Passport.overrideApiBase("https://qa.interswitchng.com/passport"); //used to override the payment api base url.
+        Payment.overrideApiBase(Payment.QA_API_BASE); // used to override the payment api base url.
+        Passport.overrideApiBase(Passport.QA_API_BASE); //used to override the payment api base url.
         List<EditText> fields = new ArrayList<>();
         fields.clear();
 
@@ -79,7 +89,7 @@ public class SplashActivity extends AppCompatActivity implements Util.PromptResp
         fields.add(pan);
         fields.add(pin);
         fields.add(expiry);
-
+        fields.add(cvv2);
         if (Validation.isValidEditboxes(fields)) {
             if (Util.isNetworkAvailable(this)) {
                 final PurchaseRequest request = new PurchaseRequest();
@@ -91,10 +101,10 @@ public class SplashActivity extends AppCompatActivity implements Util.PromptResp
                 request.setRequestorId("11179920172");
                 request.setCurrency("NGN");
                 request.setTransactionRef(RandomString.numeric(12));
+                request.setCvv2(cvv2.getText().toString());
                 Util.hide_keyboard(this);
                 Util.showProgressDialog(context, "Sending Payment");
                 new PaymentSDK(context, options).purchase(request, new IswCallback<PurchaseResponse>() {
-
                     @Override
                     public void onError(Exception error) {
                         Util.hideProgressDialog();
@@ -102,12 +112,69 @@ public class SplashActivity extends AppCompatActivity implements Util.PromptResp
                     }
 
                     @Override
-                    public void onSuccess(PurchaseResponse response) {
+                    public void onSuccess(final PurchaseResponse response) {
                         Util.hideProgressDialog();
                         transactionIdentifier = response.getTransactionIdentifier();
-                        if (StringUtils.hasText(response.getOtpTransactionIdentifier())) {
-                            otpTransactionIdentifier = response.getOtpTransactionIdentifier();
-                            Util.prompt(SplashActivity.this, "OTP", response.getMessage(), "Close", "Continue", true, 1L);
+                        if (StringUtils.hasText(response.getResponseCode())) {
+                            if (PaymentSDK.SAFE_TOKEN_RESPONSE_CODE.equals(response.getResponseCode())) {
+                                paymentId = response.getPaymentId();
+                                authData = request.getAuthData();
+                                Util.prompt(SplashActivity.this, "OTP", response.getMessage(), "Close", "Continue", true, 1L);
+                            }
+                            if (PaymentSDK.CARDINAL_RESPONSE_CODE.equals(response.getResponseCode())) {
+                                final Dialog cardinalDialog = new Dialog(context) {
+                                    @Override
+                                    public void onBackPressed() {
+                                        super.onBackPressed();
+                                    }
+                                };
+                                webView = new AuthorizeWebView(context, response) {
+                                    @Override
+                                    public void onPageDone() {
+                                        Util.showProgressDialog(context, "Processing...");
+                                        AuthorizePurchaseRequest cardinalRequest = new AuthorizePurchaseRequest();
+                                        cardinalRequest.setAuthData(request.getAuthData());
+                                        cardinalRequest.setPaymentId(response.getPaymentId());
+                                        cardinalRequest.setTransactionId(response.getTransactionId());
+                                        cardinalRequest.setEciFlag(response.getEciFlag());
+                                        new PaymentSDK(context, options).authorizePurchase(cardinalRequest, new IswCallback<AuthorizePurchaseResponse>() {
+                                            @Override
+                                            public void onError(Exception error) {
+                                                Util.hideProgressDialog();
+                                                cardinalDialog.dismiss();
+                                                Util.notify(context, "Error", error.getMessage(), "Close", false);
+                                            }
+
+                                            @Override
+                                            public void onSuccess(AuthorizePurchaseResponse response) {
+                                                Util.hideProgressDialog();
+                                                cardinalDialog.dismiss();
+                                                Util.notify(context, "Success", response.getMessage(), "Close", false);
+                                            }
+                                        });
+                                    }
+
+                                    @Override
+                                    public void onPageError(Exception error) {
+                                        Util.notify(context, "Error", error.getMessage(), "Close", false);
+                                    }
+                                };
+                                cardinalDialog.setContentView(webView);
+                                cardinalDialog.show();
+                                cardinalDialog.setCancelable(true);
+                                webView.requestFocus(View.FOCUS_DOWN);
+                                webView.getSettings().setJavaScriptEnabled(true);
+                                webView.setVerticalScrollBarEnabled(true);
+                                WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+                                Display display = wm.getDefaultDisplay();
+                                Point size = new Point();
+                                display.getSize(size);
+                                int width = size.x;
+                                int height = size.y;
+                                Window window = cardinalDialog.getWindow();
+                                window.setLayout(width, height);
+                            }
+
                         } else {
                             Util.notify(context, "Success", "Ref: " + transactionIdentifier, "Close", false);
                         }
@@ -122,12 +189,13 @@ public class SplashActivity extends AppCompatActivity implements Util.PromptResp
     @Override
     public void promptResponse(String response, long requestId) {
         if (requestId == 1 && StringUtils.hasText(response)) {
-            AuthorizeOtpRequest request = new AuthorizeOtpRequest();
-            request.setOtpTransactionIdentifier(otpTransactionIdentifier);
+            AuthorizePurchaseRequest request = new AuthorizePurchaseRequest();
+            request.setPaymentId(paymentId);
             request.setOtp(response);
+            request.setAuthData(authData);
             Util.hide_keyboard(this);
             Util.showProgressDialog(context, "Verifying OTP");
-            new PaymentSDK(context, options).authorizeOtp(request, new IswCallback<AuthorizeOtpResponse>() {
+            new PaymentSDK(context, options).authorizePurchase(request, new IswCallback<AuthorizePurchaseResponse>() {
                 @Override
                 public void onError(Exception error) {
                     Util.hideProgressDialog();
@@ -135,7 +203,7 @@ public class SplashActivity extends AppCompatActivity implements Util.PromptResp
                 }
 
                 @Override
-                public void onSuccess(AuthorizeOtpResponse otpResponse) {
+                public void onSuccess(AuthorizePurchaseResponse otpResponse) {
                     Util.hideProgressDialog();
                     Util.notify(context, "Success", "Ref: " + transactionIdentifier, "Close", false);
                 }

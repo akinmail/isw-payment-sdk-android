@@ -59,6 +59,6 @@ android {
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')
     compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.interswitchng:payment-android:0.0.12-Beta'
+    compile 'com.interswitchng:payment-android:0.0.6'
     compile(name: 'deviceprint-release-2.2.0', ext: 'aar')
 }
