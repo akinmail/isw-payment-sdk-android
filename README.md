@@ -52,9 +52,16 @@ It consists of ​a library:
 5. Select the **deviceprint-release-2.2.0.aar** in libs folder
 6. To add the jar files, edit the build.gradle file of your app and add
 ```java
-    compile 'com.interswitchng:payment-android:0.0.12-Beta'
-    compile 'com.android.support:appcompat-v7:23.1.1'
-    compile 'com.android.support:design:23.1.1'
+    repositories {
+        maven {
+            url  'http://dl.bintray.com/techquest/maven-repo'
+        }
+    }
+    dependencies{
+        compile 'com.interswitchng:payment-android:0.0.6'
+        compile 'com.android.support:appcompat-v7:23.1.1'
+        compile 'com.android.support:design:23.1.1'
+    }    
 ```
 7. Finally, rebuild the project
 
