@@ -30,8 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         activity = this;
         context = this;
-        Payment.overrideApiBase("https://qa.interswitchng.com"); // used to override the payment api base url.
-        Passport.overrideApiBase("https://qa.interswitchng.com/passport"); //used to override the payment api base url.
+        Payment.overrideApiBase(Payment.QA_API_BASE); // used to override the payment api base url.
+        Passport.overrideApiBase(Passport.QA_API_BASE); //used to override the payment api base url.
         Util.hideProgressDialog();
         Button addCard = (Button) findViewById(R.id.newFlow);
         addCard.setOnClickListener(new View.OnClickListener() {
@@ -46,10 +46,8 @@ public class MainActivity extends AppCompatActivity {
         payWithCardDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Payment.overrideApiBase("https://qa.interswitchng.com"); // used to override the payment api base url.
-                Passport.overrideApiBase("https://qa.interswitchng.com/passport"); //used to override the payment api base url.
-                RequestOptions options = RequestOptions.builder().setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54").setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=").build();
-                final PayWithCard payWithCard = new PayWithCard(activity, "1407002510", "Payment for trip completed", "10", "NGN", options, new IswCallback<PurchaseResponse>() {
+                RequestOptions options = RequestOptions.builder().setClientId("IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232").setClientSecret("ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=").build();
+                final PayWithCard payWithCard = new PayWithCard(activity, "1407002510", "Payment for trip completed", "200", "NGN", options, new IswCallback<PurchaseResponse>() {
 
                     @Override
                     public void onError(Exception error) {
@@ -73,11 +71,8 @@ public class MainActivity extends AppCompatActivity {
         walletPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Payment.overrideApiBase("https://qa.interswitchng.com"); // used to override the payment api base url.
-                Passport.overrideApiBase("https://qa.interswitchng.com/passport"); //used to override the payment api base url.
-                RequestOptions options = RequestOptions.builder().setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54").setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=").build();
-
-                PayWithWallet payWithWallet = new PayWithWallet(activity, "1407002510", "Payment for Ball Gown", "1000", "NGN", options, new IswCallback<PurchaseResponse>() {
+                RequestOptions options = RequestOptions.builder().setClientId("IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232").setClientSecret("ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=").build();
+                PayWithWallet payWithWallet = new PayWithWallet(activity, "1407002510", "Payment for Ball Gown", "200", "NGN", options, new IswCallback<PurchaseResponse>() {
                     @Override
                     public void onError(Exception error) {
                         Util.hideProgressDialog();
@@ -98,10 +93,8 @@ public class MainActivity extends AppCompatActivity {
         selectPayOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Payment.overrideApiBase("https://qa.interswitchng.com"); // used to override the payment api base url.
-                Passport.overrideApiBase("https://qa.interswitchng.com/passport"); //used to override the payment api base url.
-                RequestOptions options = RequestOptions.builder().setClientId("IKIAD6DC1B942D95035FBCC5A4449C893D36536B5D54").setClientSecret("X1u1M6UNyASzslufiyxZnLb3u78TYODVnbRi7OxLNew=").build();
-                Pay pay = new Pay(activity, "1407002510", "Payment for Ball Gown", "1000", "NGN", options, new IswCallback<PurchaseResponse>() {
+                RequestOptions options = RequestOptions.builder().setClientId("IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232").setClientSecret("ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=").build();
+                Pay pay = new Pay(activity, "1407002510", "Payment for Ball Gown", "200", "NGN", options, new IswCallback<PurchaseResponse>() {
                     @Override
                     public void onError(Exception error) {
                         Util.hideProgressDialog();
