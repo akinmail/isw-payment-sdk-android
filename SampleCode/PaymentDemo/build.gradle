@@ -1,3 +1,13 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        // Specify your gradle plugin version here
+        classpath 'com.android.tools.build:gradle:2.1.2'
+    }
+}
+
 apply plugin: 'com.android.application'
 
 android {
@@ -27,6 +37,9 @@ repositories {
     jcenter()
     flatDir {
         dirs 'libs'
+    }
+    maven {
+        url  'http://dl.bintray.com/techquest/maven-repo'
     }
 }
 

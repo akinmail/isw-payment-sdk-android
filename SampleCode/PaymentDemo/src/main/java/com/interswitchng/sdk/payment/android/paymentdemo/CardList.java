@@ -101,7 +101,7 @@ public class CardList extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.addCard) {
-            RequestOptions options = RequestOptions.builder().setClientId("IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232").setClientSecret("ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=").build();
+            RequestOptions options = RequestOptions.builder().setClientId(MainActivity.CLIENT_ID).setClientSecret(MainActivity.CLIENT_SECRET).build();
             final ValidateCard validateCard = new ValidateCard(activity, "1407002510", options, new IswCallback<AuthorizeCardResponse>() {
 
                 @Override
@@ -191,7 +191,7 @@ public class CardList extends AppCompatActivity {
         @Override
         public boolean onActionItemClicked(android.view.ActionMode actionMode, MenuItem menuItem) {
             AuthorizeCardResponse response = arrayList.get(position);
-            RequestOptions options = RequestOptions.builder().setClientId("IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232").setClientSecret("ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=").build();
+            RequestOptions options = RequestOptions.builder().setClientId(MainActivity.CLIENT_ID).setClientSecret(MainActivity.CLIENT_SECRET).build();
             String customerId = "1407002510";
             String amount = "200";
             String token = response.getToken();
