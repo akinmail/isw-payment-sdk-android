@@ -193,7 +193,8 @@ During development of your app, you should use the SDK in sandbox mode to enable
 * Validate card is used to check if a card is a valid card, it returns the card balance and token
 * To call validate card, use this code.
 
-  Note: Supply your Client Id and Client Secret you got after registering as a Merchant
+  Note: * Supply your Client Id and Client Secret you got after registering as a Merchant
+**Please Note: *Balance is not returned for VISA Card***
 
 ```java
     RequestOptions options = RequestOptions.builder()
@@ -394,8 +395,9 @@ Note: Supply your Client Id and Client Secret you got after registering as a Mer
 * Create a Validate/Add Card button
 * In the onClick listener of the Validate/Add Card button, use this code.
 
-Note: Supply your Client Id and Client Secret you got after registering as a Merchant
 
+Note: Supply your Client Id and Client Secret you got after registering as a Merchant
+**Please Note: *Balance is not returned for VISA Card***
 ```java
     RequestOptions options = RequestOptions.builder()
     .setClientId("IKIA3E267D5C80A52167A581BBA04980CA64E7B2E70E")
