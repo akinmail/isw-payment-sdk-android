@@ -24,6 +24,9 @@ public class MainActivity extends AppCompatActivity {
     private Button walletPay;
     private Button selectPayOption;
 
+    public static final String CLIENT_ID = "IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232";
+    public static final String CLIENT_SECRET = "ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,7 +49,7 @@ public class MainActivity extends AppCompatActivity {
         payWithCardDialog.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RequestOptions options = RequestOptions.builder().setClientId("IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232").setClientSecret("ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=").build();
+                RequestOptions options = RequestOptions.builder().setClientId(CLIENT_ID).setClientSecret(CLIENT_SECRET).build();
                 final PayWithCard payWithCard = new PayWithCard(activity, "1407002510", "Payment for trip completed", "200", "NGN", options, new IswCallback<PurchaseResponse>() {
 
                     @Override
@@ -71,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         walletPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RequestOptions options = RequestOptions.builder().setClientId("IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232").setClientSecret("ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=").build();
+                RequestOptions options = RequestOptions.builder().setClientId(CLIENT_ID).setClientSecret(CLIENT_SECRET).build();
                 PayWithWallet payWithWallet = new PayWithWallet(activity, "1407002510", "Payment for Ball Gown", "200", "NGN", options, new IswCallback<PurchaseResponse>() {
                     @Override
                     public void onError(Exception error) {
@@ -93,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         selectPayOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RequestOptions options = RequestOptions.builder().setClientId("IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232").setClientSecret("ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=").build();
+                RequestOptions options = RequestOptions.builder().setClientId(CLIENT_ID).setClientSecret(CLIENT_SECRET).build();
                 Pay pay = new Pay(activity, "1407002510", "Payment for Ball Gown", "200", "NGN", options, new IswCallback<PurchaseResponse>() {
                     @Override
                     public void onError(Exception error) {
@@ -110,17 +113,5 @@ public class MainActivity extends AppCompatActivity {
                 pay.start();
             }
         });
-
     }
-
 }
-
-
-
-
-
-
-
-
-
-
