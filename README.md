@@ -60,8 +60,8 @@ Add this snippet to your build.gradle file
 ***To set up the Payment request, use the snippet below***
 The first two lines is use to override the Live API BASE for both passport and payment
 ```java
-        Passport.overrideApiBase(Passport.SANDBOX_API_BASE); // Passport Api on QA Environment
-        Payment.overrideApiBase(Payment.SANDBOX_API_BASE);   // Payment Api on QA Environment
+        Passport.overrideApiBase(Passport.SANDBOX_API_BASE); // Passport Api on Sandbox Environment
+        Payment.overrideApiBase(Payment.SANDBOX_API_BASE);   // Payment Api on Sandbox Environment
         String clientId = "IKIAF8F70479A6902D4BFF4E443EBF15D1D6CB19E232";
         String clientSecret = "ugsmiXPXOOvks9MR7+IFHSQSdk8ZzvwQMGvd0GJva30=";
         RequestOptions.RequestOptionsBuilder builder = RequestOptions.builder().setClientId(clientId).setClientSecret(clientSecret);
